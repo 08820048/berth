@@ -1,0 +1,76 @@
+name: Berth
+options:
+  bundleIdPrefix: app.berth
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  defaultConfig: Debug
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+targets:
+  Berth:
+    type: application
+    platform: macOS
+    sources:
+      - path: Berth
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.berth.macos
+        PRODUCT_NAME: Berth
+        MARKETING_VERSION: 0.2.0
+        CURRENT_PROJECT_VERSION: 1
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_LSUIElement: YES
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.developer-tools
+        INFOPLIST_KEY_NSHumanReadableCopyright: Copyright © 2026 Berth
+        INFOPLIST_KEY_CFBundleDisplayName: Berth
+        INFOPLIST_KEY_CFBundleName: Berth
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        COMBINE_HIDPI_IMAGES: YES
+        CODE_SIGN_ENTITLEMENTS: Berth/Berth.entitlements
+        CODE_SIGN_IDENTITY: "-"
+        ENABLE_HARDENED_RUNTIME: NO
+        DEAD_CODE_STRIPPING: YES
+    entitlements:
+      path: Berth/Berth.entitlements
+    info:
+      path: Berth/Info.plist
+      properties:
+        LSUIElement: true
+        CFBundleDisplayName: Berth
+        CFBundleName: Berth
+        LSApplicationCategoryType: public.app-category.developer-tools
+        NSHighResolutionCapable: true
+    scheme:
+      testTargets:
+        - BerthTests
+  BerthTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: BerthTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.berth.macos.tests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: "-"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+    dependencies:
+      - target: Berth
+schemes:
+  Berth:
+    build:
+      targets:
+        Berth: all
+        BerthTests: [test]
+    test:
+      targets:
+        - BerthTests
+      gatherCoverageData: false
