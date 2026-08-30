@@ -5,7 +5,6 @@ struct MenuBarPanel: View {
     @Bindable var store: PortStore
     var settings: AppSettings
     var onOpenSettings: () -> Void
-    var onSizeChange: ((CGSize) -> Void)? = nil
 
     var body: some View {
         ZStack {
@@ -39,10 +38,6 @@ struct MenuBarPanel: View {
         .animation(.easeOut(duration: 0.15), value: store.stopPrompt?.id)
         .onAppear {
             Task { await store.refresh() }
-            reportSize()
-        }
-        .onChange(of: panelHeight) { _, _ in
-            reportSize()
         }
     }
 
@@ -57,18 +52,6 @@ struct MenuBarPanel: View {
 
     private var listHeight: CGFloat {
         BerthLayout.listHeight(rows: visibleRowCount, groups: store.sections.count, empty: isEmptyList)
-    }
-
-    private var bannerHeight: CGFloat {
-        (store.isStopping || store.banner != nil) ? 33 : 0
-    }
-
-    private var panelHeight: CGFloat {
-        BerthLayout.headerHeight + BerthLayout.searchHeight + listHeight + bannerHeight + (BerthLayout.footerRowHeight * 2)
-    }
-
-    private func reportSize() {
-        onSizeChange?(CGSize(width: BerthLayout.panelWidth, height: panelHeight))
     }
 
     private var header: some View {
@@ -154,7 +137,6 @@ struct MenuBarPanel: View {
                     }
                 }
                 .scrollIndicators(.automatic)
-                .background(PanelScrollFix())
                 .frame(height: listHeight)
             }
         }

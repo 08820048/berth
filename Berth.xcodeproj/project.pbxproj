@@ -11,6 +11,7 @@
 		01F57B0A42F7186E5A8CA059 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309A61A6E9B6D936DB66A613 /* SettingsView.swift */; };
 		03030E2FF1B040AF90046619 /* PortStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC66CACE8A9E4BEA6060BEE /* PortStore.swift */; };
 		05BC380B412913F3F2241E8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C22CE8F961A5674DFE5835C /* Assets.xcassets */; };
+		05E3D5BD54E5970F36EDD393 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D184A18E57A113831FEBA310 /* MenuBarExtraAccess */; };
 		0CF656BEA005BA2EBBFCC7FE /* IgnoreRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE89D4704012084E2EA903EB /* IgnoreRuleTests.swift */; };
 		2A17A96D615F05A239B906ED /* PortScanEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935CE4B10B5B3C7097EF1BD9 /* PortScanEngineTests.swift */; };
 		2E3CD2DAE2CCAF6CBFEFDD1A /* FrameworkDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5F9CB21CCC06320A01B3D /* FrameworkDetector.swift */; };
@@ -18,7 +19,6 @@
 		3ED4E8AB3092CEF82B65F026 /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */; };
 		43DE0735C4E6207DD782DFD6 /* DockerInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD2E8634B7AD178B01AD102 /* DockerInspector.swift */; };
 		569503809EF3D10849B9AAC5 /* BerthLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1877995779C85F404441E /* BerthLayout.swift */; };
-		61B80CCD65DCE1EF0D9BD21A /* PanelScrollFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9527CAAB1315784085A356 /* PanelScrollFix.swift */; };
 		6EC6D9AF30C25B3599128AB7 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73401CAB58FF59B53AEAA2C4 /* L10n.swift */; };
 		7058946AF8041AAA1903868D /* RecencySortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C178A9D149EC75A8FBCBC7 /* RecencySortTests.swift */; };
 		70D911B611A571ACF5259CA7 /* HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E78FDFF4BDCCEE6E5816DA /* HotKey.swift */; };
@@ -30,7 +30,6 @@
 		A1F70086C7E228C36789748A /* BerthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918848609FCD11A3F8BB15BF /* BerthApp.swift */; };
 		A88779ECD086BF7ED8C5F31F /* MenuBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A274FB4959156F86990A727 /* MenuBarPanel.swift */; };
 		AF6E7F493708BB295FF86D60 /* PortRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */; };
-		B1DCB067A5E18CC88C36B101 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E426B59DE6EB232AA88181 /* StatusItemController.swift */; };
 		B50149380CFC26D0A7FDC4BF /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AC4659D9CA923EF72FE28 /* AppSettings.swift */; };
 		B512F2548E7D630BF104E162 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9988362C42F3852D74E123D7 /* Localizable.strings */; };
 		CB39F8848E94A3AEF32D7C66 /* FrameworkDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A358F06BB96FBEF46F1BBAF /* FrameworkDetectorTests.swift */; };
@@ -62,7 +61,6 @@
 		15E78FDFF4BDCCEE6E5816DA /* HotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKey.swift; sourceTree = "<group>"; };
 		19C178A9D149EC75A8FBCBC7 /* RecencySortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecencySortTests.swift; sourceTree = "<group>"; };
 		2005052EE5405DD32FBB0D42 /* ProjectNameResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectNameResolverTests.swift; sourceTree = "<group>"; };
-		22E426B59DE6EB232AA88181 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
 		2CC66CACE8A9E4BEA6060BEE /* PortStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortStore.swift; sourceTree = "<group>"; };
 		2F23DE35032E1BC73207DD7C /* LsofParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LsofParser.swift; sourceTree = "<group>"; };
 		309A61A6E9B6D936DB66A613 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -93,13 +91,23 @@
 		C5DCBBD927A8625DEE419325 /* DockerInspectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockerInspectorTests.swift; sourceTree = "<group>"; };
 		CB1AC4659D9CA923EF72FE28 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortRowView.swift; sourceTree = "<group>"; };
-		CC9527CAAB1315784085A356 /* PanelScrollFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelScrollFix.swift; sourceTree = "<group>"; };
 		D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
 		E6D8ABF103601C3A407CD870 /* Berth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Berth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F25B53B8AFB5D04E747316D3 /* StopConfirmPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopConfirmPanel.swift; sourceTree = "<group>"; };
 		FE2AD08629D2DB150D3127F9 /* KillPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillPolicyTests.swift; sourceTree = "<group>"; };
 		FEC5D31824EFFEA12E71068B /* CommandRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8BBFF85F0A874A698579AB04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05E3D5BD54E5970F36EDD393 /* MenuBarExtraAccess in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1B9424792158EE8A4BBDD13D /* Store */ = {
@@ -126,7 +134,6 @@
 				15E78FDFF4BDCCEE6E5816DA /* HotKey.swift */,
 				73401CAB58FF59B53AEAA2C4 /* L10n.swift */,
 				79FB77BAA52A8144DC7E114D /* SettingsWindowController.swift */,
-				22E426B59DE6EB232AA88181 /* StatusItemController.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -213,7 +220,6 @@
 				874CA249600E594EC4DC8F0B /* FrameworkIcon.swift */,
 				D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */,
 				6A274FB4959156F86990A727 /* MenuBarPanel.swift */,
-				CC9527CAAB1315784085A356 /* PanelScrollFix.swift */,
 				CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */,
 				309A61A6E9B6D936DB66A613 /* SettingsView.swift */,
 				F25B53B8AFB5D04E747316D3 /* StopConfirmPanel.swift */,
@@ -248,6 +254,7 @@
 			buildPhases = (
 				1AF0D94F248187B78BAA5A75 /* Sources */,
 				ED26D020C7512E64C3E82D87 /* Resources */,
+				8BBFF85F0A874A698579AB04 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -255,6 +262,7 @@
 			);
 			name = Berth;
 			packageProductDependencies = (
+				D184A18E57A113831FEBA310 /* MenuBarExtraAccess */,
 			);
 			productName = Berth;
 			productReference = E6D8ABF103601C3A407CD870 /* Berth.app */;
@@ -289,6 +297,9 @@
 			);
 			mainGroup = 994451B41C90DEF5326D4019;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				186B134F9AB6747710DC5151 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BF9EF2C868053945AA10ED83 /* Products */;
 			projectDirPath = "";
@@ -331,7 +342,6 @@
 				E014F1FA61A7937D9839B3A8 /* LsofParser.swift in Sources */,
 				3ED4E8AB3092CEF82B65F026 /* MenuBarLabel.swift in Sources */,
 				A88779ECD086BF7ED8C5F31F /* MenuBarPanel.swift in Sources */,
-				61B80CCD65DCE1EF0D9BD21A /* PanelScrollFix.swift in Sources */,
 				81D86651FE0FDEE901A1289C /* PortModels.swift in Sources */,
 				AF6E7F493708BB295FF86D60 /* PortRowView.swift in Sources */,
 				008C3F74B9FE34C5C64E43DA /* PortScanner.swift in Sources */,
@@ -342,7 +352,6 @@
 				F8B6987C8A078813FECA2067 /* ProtectedProcessPolicy.swift in Sources */,
 				01F57B0A42F7186E5A8CA059 /* SettingsView.swift in Sources */,
 				F37AC0C2430714540A8E29F1 /* SettingsWindowController.swift in Sources */,
-				B1DCB067A5E18CC88C36B101 /* StatusItemController.swift in Sources */,
 				E9D6DB7DD82179F289E8A286 /* StopConfirmPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -637,6 +646,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		186B134F9AB6747710DC5151 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/MenuBarExtraAccess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D184A18E57A113831FEBA310 /* MenuBarExtraAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 186B134F9AB6747710DC5151 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
+			productName = MenuBarExtraAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5BA7A63201D39C0A30845A0B /* Project object */;
 }

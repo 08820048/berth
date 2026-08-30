@@ -6,12 +6,35 @@ final class BerthAppDelegate: NSObject, NSApplicationDelegate {
     static weak var shared: BerthAppDelegate?
 
     let model = AppModel()
-    private var statusItem: StatusItemController?
+    private let settingsWindow = SettingsWindowController()
+    private var panelPresentation: Binding<Bool>?
+    private var lastHotKey: HotKeySpec?
+    private var hotKeyTask: Task<Void, Never>?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         Self.shared = self
         NSApp.setActivationPolicy(.accessory)
-        statusItem = StatusItemController(model: model)
+        HotKeyCenter.shared.onPressed = { [weak self] in
+            self?.panelPresentation?.wrappedValue.toggle()
+        }
+        hotKeyTask = Task { [weak self] in
+            while let self, !Task.isCancelled {
+                let current = self.model.settings.hotKey
+                if current != self.lastHotKey {
+                    self.lastHotKey = current
+                    HotKeyCenter.shared.register(current)
+                }
+                try? await Task.sleep(nanoseconds: 400_000_000)
+            }
+        }
+    }
+
+    func bindPanelPresentation(_ binding: Binding<Bool>) {
+        panelPresentation = binding
+    }
+
+    func openSettings() {
+        settingsWindow.show(settings: model.settings)
     }
 
     func revealForSettings() {
