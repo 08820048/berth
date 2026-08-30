@@ -2,8 +2,9 @@ import AppKit
 import SwiftUI
 
 /// Aligns SwiftUI scrollers in NSPopover with the panel chrome.
-/// Default popover hosting leaves a black scroller slot; overlay + window
-/// background matches MenuBarExtra apps like Port Radar.
+/// Default popover hosting leaves a black scroller slot; clearing the scroll
+/// view's own backgrounds keeps the popover's frosted material visible,
+/// matching MenuBarExtra apps like Port Radar.
 struct PanelScrollFix: NSViewRepresentable {
     func makeNSView(context: Context) -> SentinelView {
         SentinelView()
@@ -32,25 +33,28 @@ struct PanelScrollFix: NSViewRepresentable {
 
         func apply() {
             guard let scroll = nearestScrollView() else { return }
-            let fill = NSColor.windowBackgroundColor
-            scroll.drawsBackground = true
-            scroll.backgroundColor = fill
-            scroll.contentView.drawsBackground = true
-            scroll.contentView.backgroundColor = fill
+            // Clear every background layer so the popover's frosted material
+            // shows through the scroller area.
+            scroll.drawsBackground = false
+            scroll.backgroundColor = .clear
+            scroll.contentView.drawsBackground = false
+            scroll.contentView.backgroundColor = .clear
+            (scroll.documentView as? NSView)?.wantsLayer = true
+            (scroll.documentView as? NSView)?.layer?.backgroundColor = .clear
             scroll.autohidesScrollers = true
             scroll.hasHorizontalScroller = false
             scroll.scrollerStyle = .overlay
             scroll.scrollerKnobStyle = .default
-            style(scroll.verticalScroller, fill: fill)
-            style(scroll.horizontalScroller, fill: fill)
+            style(scroll.verticalScroller)
+            style(scroll.horizontalScroller)
         }
 
-        private func style(_ scroller: NSScroller?, fill: NSColor) {
+        private func style(_ scroller: NSScroller?) {
             guard let scroller else { return }
             scroller.knobStyle = .default
             scroller.controlSize = .small
             scroller.wantsLayer = true
-            scroller.layer?.backgroundColor = fill.withAlphaComponent(0).cgColor
+            scroller.layer?.backgroundColor = NSColor.clear.cgColor
             scroller.layer?.masksToBounds = true
         }
 

@@ -36,7 +36,6 @@ struct MenuBarPanel: View {
             }
         }
         .frame(width: BerthLayout.panelWidth)
-        .background(Color(nsColor: .windowBackgroundColor))
         .animation(.easeOut(duration: 0.15), value: store.stopPrompt?.id)
         .onAppear {
             Task { await store.refresh() }
@@ -155,7 +154,6 @@ struct MenuBarPanel: View {
                     }
                 }
                 .scrollIndicators(.automatic)
-                .background(Color(nsColor: .windowBackgroundColor))
                 .background(PanelScrollFix())
                 .frame(height: listHeight)
             }
