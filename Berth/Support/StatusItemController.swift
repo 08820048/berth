@@ -79,6 +79,9 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
             }
         )
         let hosting = NSHostingController(rootView: root)
+        hosting.view.wantsLayer = true
+        hosting.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+        popover.appearance = NSApp.effectiveAppearance
         popover.contentViewController = hosting
         popover.contentSize = NSSize(width: BerthLayout.panelWidth, height: 280)
     }

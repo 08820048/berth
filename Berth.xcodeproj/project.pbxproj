@@ -18,6 +18,7 @@
 		3ED4E8AB3092CEF82B65F026 /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */; };
 		43DE0735C4E6207DD782DFD6 /* DockerInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD2E8634B7AD178B01AD102 /* DockerInspector.swift */; };
 		569503809EF3D10849B9AAC5 /* BerthLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1877995779C85F404441E /* BerthLayout.swift */; };
+		61B80CCD65DCE1EF0D9BD21A /* PanelScrollFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9527CAAB1315784085A356 /* PanelScrollFix.swift */; };
 		6EC6D9AF30C25B3599128AB7 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73401CAB58FF59B53AEAA2C4 /* L10n.swift */; };
 		7058946AF8041AAA1903868D /* RecencySortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C178A9D149EC75A8FBCBC7 /* RecencySortTests.swift */; };
 		70D911B611A571ACF5259CA7 /* HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E78FDFF4BDCCEE6E5816DA /* HotKey.swift */; };
@@ -92,6 +93,7 @@
 		C5DCBBD927A8625DEE419325 /* DockerInspectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockerInspectorTests.swift; sourceTree = "<group>"; };
 		CB1AC4659D9CA923EF72FE28 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortRowView.swift; sourceTree = "<group>"; };
+		CC9527CAAB1315784085A356 /* PanelScrollFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelScrollFix.swift; sourceTree = "<group>"; };
 		D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
 		E6D8ABF103601C3A407CD870 /* Berth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Berth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F25B53B8AFB5D04E747316D3 /* StopConfirmPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopConfirmPanel.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				874CA249600E594EC4DC8F0B /* FrameworkIcon.swift */,
 				D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */,
 				6A274FB4959156F86990A727 /* MenuBarPanel.swift */,
+				CC9527CAAB1315784085A356 /* PanelScrollFix.swift */,
 				CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */,
 				309A61A6E9B6D936DB66A613 /* SettingsView.swift */,
 				F25B53B8AFB5D04E747316D3 /* StopConfirmPanel.swift */,
@@ -328,6 +331,7 @@
 				E014F1FA61A7937D9839B3A8 /* LsofParser.swift in Sources */,
 				3ED4E8AB3092CEF82B65F026 /* MenuBarLabel.swift in Sources */,
 				A88779ECD086BF7ED8C5F31F /* MenuBarPanel.swift in Sources */,
+				61B80CCD65DCE1EF0D9BD21A /* PanelScrollFix.swift in Sources */,
 				81D86651FE0FDEE901A1289C /* PortModels.swift in Sources */,
 				AF6E7F493708BB295FF86D60 /* PortRowView.swift in Sources */,
 				008C3F74B9FE34C5C64E43DA /* PortScanner.swift in Sources */,
