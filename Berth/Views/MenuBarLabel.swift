@@ -6,7 +6,7 @@ struct MenuBarLabel: View {
 
     var body: some View {
         HStack(spacing: 3) {
-            Image(systemName: store.isStopping ? "arrow.triangle.2.circlepath" : (store.hasConflict ? "exclamationmark.triangle" : "anchor"))
+            Image(systemName: store.isStopping ? "arrow.triangle.2.circlepath" : (store.hasConflict ? "exclamationmark.triangle" : "network"))
                 .symbolRenderingMode(.monochrome)
             if settings.showMenuBarCount, store.developmentCount > 0, !store.isStopping {
                 Text("\(store.developmentCount)")
