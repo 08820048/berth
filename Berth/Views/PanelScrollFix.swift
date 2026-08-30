@@ -3,8 +3,9 @@ import SwiftUI
 
 /// Aligns SwiftUI scrollers in NSPopover with the panel chrome.
 /// Default popover hosting leaves a black scroller slot; clearing the scroll
-/// view's own backgrounds keeps the popover's frosted material visible,
-/// matching MenuBarExtra apps like Port Radar.
+/// view's own backgrounds and forcing overlay scrollers keeps the popover's
+/// frosted material visible with the native auto-hiding knob, matching
+/// MenuBarExtra apps like Port Radar.
 struct PanelScrollFix: NSViewRepresentable {
     func makeNSView(context: Context) -> SentinelView {
         SentinelView()
@@ -39,23 +40,15 @@ struct PanelScrollFix: NSViewRepresentable {
             scroll.backgroundColor = .clear
             scroll.contentView.drawsBackground = false
             scroll.contentView.backgroundColor = .clear
-            (scroll.documentView as? NSView)?.wantsLayer = true
-            (scroll.documentView as? NSView)?.layer?.backgroundColor = .clear
             scroll.autohidesScrollers = true
             scroll.hasHorizontalScroller = false
-            scroll.scrollerStyle = .overlay
-            scroll.scrollerKnobStyle = .default
-            style(scroll.verticalScroller)
-            style(scroll.horizontalScroller)
-        }
-
-        private func style(_ scroller: NSScroller?) {
-            guard let scroller else { return }
-            scroller.knobStyle = .default
-            scroller.controlSize = .small
-            scroller.wantsLayer = true
-            scroller.layer?.backgroundColor = NSColor.clear.cgColor
-            scroller.layer?.masksToBounds = true
+            // Overlay scrollers only re-render after the scroll view re-tiles,
+            // so force a layout pass when switching from the legacy style.
+            if scroll.scrollerStyle != .overlay {
+                scroll.scrollerStyle = .overlay
+                scroll.tile()
+                scroll.needsLayout = true
+            }
         }
 
         private func nearestScrollView() -> NSScrollView? {
