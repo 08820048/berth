@@ -34,28 +34,26 @@ env -u HTTPS_PROXY -u HTTP_PROXY -u https_proxy -u http_proxy npx shadcn@latest 
 
 - 高信任、高质感、克制：中性色系统（coss neutral），唯一强调色是青绿色（teal），
   只用于"重启完成更新"按钮——与 App 内更新按钮一致
-- 文案只写事实：真实版本号（0.0001）、公证状态、Apache-2.0、下载文件大小
+- 文案只写事实：真实版本号、公证状态、Apache-2.0、下载文件大小
 - 支持 light/dark（跟随系统 + 手动切换，localStorage key `berth-theme`）
 - 面板配图是手写 HTML/CSS 复刻的 App 面板，不用截图，任意 DPI 都清晰
+
+## 版本号规则
+
+- **MARKETING_VERSION**：`主版本.次版本号.修订号`（semver 风格，如 `0.1.0`），用户可见
+- **CURRENT_PROJECT_VERSION**：纯整数递增（1、2、3…），Sparkle 内部比较用
+- 首个公开版为 0.0001（旧规则），从 0.1.0 起改用新规则
 
 ## 数据与发布联动
 
 - 下载链接指向 Cloudflare R2：
-  `https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/Berth-0.0001.dmg`
+  `https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/`（当前：`Berth-0.0001.dmg`）
 - **发新版时需要同步更新官网三处**：
   1. `app/page.tsx` 顶部的 `DOWNLOAD_URL`
-  2. Hero 区的 Badge 版本号（`v0.0001`）
+  2. Hero 区的 Badge 版本号（如 `v0.1.0`）
   3. Changelog 区块和底部 CTA 的版本号/文件名
 
-## 部署（未配置，可选项）
+## 官网上线
 
-`out/` 是纯静态产物，可直接部署：
-
-```bash
-cd ~/Documents/berth-website && npm run build
-npx wrangler pages deploy out --project-name berth-website
-# 或上传到 R2 桶（和安装包同一个桶也可以）
-```
-
-建议后续绑定自定义域名（如 berth.app）后，把 `app/layout.tsx` 里的
-`metadataBase` 一并更新。
+- 已部署到 Cloudflare Pages（项目名 `berth-website`），生产域名 **https://berth.fyi**
+- 部署命令：`npx wrangler pages deploy out --project-name berth-website`

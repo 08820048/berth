@@ -2,6 +2,9 @@
 # Berth release: build (Developer ID), notarize, staple, package, and
 # generate a signed Sparkle appcast entry into ./appcast.xml
 #
+# Version rule: MARKETING_VERSION = major.minor.patch (e.g. 0.1.0);
+# CURRENT_PROJECT_VERSION = monotonically increasing integer for Sparkle.
+#
 # Prerequisites (one-time):
 #   1. Developer ID Application certificate in the login keychain.
 #   2. Notarization credentials:
