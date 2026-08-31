@@ -64,9 +64,25 @@ echo "==> Stapling ticket"
 xcrun stapler staple "$APP"
 spctl --assess --type execute --verbose=2 "$APP"
 
-echo "==> Repackaging (stapled)"
+echo "==> Repackaging (stapled zip for Sparkle updates)"
 rm ".build/release/$ZIP"
 ditto -c -k --keepParent "$APP" ".build/release/$ZIP"
+
+echo "==> Building DMG (for manual download/install)"
+DMG="Berth-$VERSION.dmg"
+STAGING=$(mktemp -d)
+cp -R "$APP" "$STAGING/"
+ln -s /Applications "$STAGING/Applications"
+hdiutil create -volname "$APP_NAME $VERSION" -srcfolder "$STAGING" -ov -format UDZO \
+  ".build/release/$DMG" >/dev/null
+rm -rf "$STAGING"
+
+echo "==> Notarizing DMG"
+xcrun notarytool submit ".build/release/$DMG" \
+  --keychain-profile "$NOTARY_PROFILE" --wait
+echo "==> Stapling DMG"
+xcrun stapler staple ".build/release/$DMG"
+xcrun stapler validate ".build/release/$DMG"
 
 echo "==> Generating signed appcast"
 SPARKLE_BIN=".build/DerivedData/SourcePackages/artifacts/sparkle/Sparkle/bin"
@@ -82,12 +98,14 @@ cat <<EOF
 ==> Uploading to R2 ($R2_BUCKET)
 EOF
 wrangler r2 object put "$R2_BUCKET/$ZIP" --file ".build/release/$ZIP" --content-type application/zip --remote
+wrangler r2 object put "$R2_BUCKET/$DMG" --file ".build/release/$DMG" --content-type application/x-apple-diskimage --remote
 wrangler r2 object put "$R2_BUCKET/appcast.xml" --file ".build/release/appcast.xml" --content-type application/xml --remote
 
 cat <<EOF
 
 Done. Published:
-  - $PUBLIC_BASE_URL/$ZIP
+  - $PUBLIC_BASE_URL/$ZIP (Sparkle updates)
+  - $PUBLIC_BASE_URL/$DMG (manual download/install)
   - $PUBLIC_BASE_URL/appcast.xml
 
 Optional:
