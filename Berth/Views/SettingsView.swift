@@ -176,6 +176,7 @@ struct SettingsView: View {
             Spacer()
             Toggle(title, isOn: isOn)
                 .labelsHidden()
+                .tint(Color(.sRGB, red: 15 / 255, green: 164 / 255, blue: 251 / 255)) // #0FA4FB
                 .fixedSize()
         }
     }

@@ -1,4 +1,3 @@
-import AppKit
 import SwiftUI
 
 struct StopConfirmPanel: View {
@@ -15,12 +14,12 @@ struct StopConfirmPanel: View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.primary)
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(Color.primary.opacity(0.82))
 
                 Text(L10n.string("confirm.detail", prompt.entry.port, prompt.entry.primaryPID))
                     .font(.system(.caption, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.primary.opacity(0.72))
                     .monospacedDigit()
             }
 
@@ -33,17 +32,11 @@ struct StopConfirmPanel: View {
                 resultBody(outcome)
             }
         }
-        .padding(18)
+        .padding(16)
         .frame(width: 300, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color(nsColor: .windowBackgroundColor))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .strokeBorder(Color.primary.opacity(0.08), lineWidth: 1)
-        )
-        .shadow(color: .black.opacity(0.28), radius: 22, y: 10)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .shadow(color: .black.opacity(0.06), radius: 2, y: 1)
+        .shadow(color: .black.opacity(0.12), radius: 16, y: 6)
     }
 
     private var title: String {
@@ -69,7 +62,7 @@ struct StopConfirmPanel: View {
 
             Text(prompt.force ? L10n.string("confirm.killHelp") : L10n.string("confirm.termHelp"))
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.primary.opacity(0.72))
                 .fixedSize(horizontal: false, vertical: true)
         }
 
@@ -97,7 +90,7 @@ struct StopConfirmPanel: View {
                 .controlSize(.small)
             Text(L10n.string("confirm.stopping"))
                 .font(.callout)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.primary.opacity(0.72))
             Spacer()
         }
         .padding(.vertical, 10)
@@ -113,34 +106,35 @@ struct StopConfirmPanel: View {
                     .foregroundStyle(.green)
                 Text(L10n.string("confirm.stopped"))
                     .font(.callout.weight(.medium))
+                    .foregroundStyle(Color.primary.opacity(0.82))
             case .stillOccupied:
                 Image(systemName: "exclamationmark.circle.fill")
                     .font(.title3)
                     .foregroundStyle(.orange)
                 Text(L10n.string("stop.stillOccupied"))
                     .font(.callout)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.primary.opacity(0.72))
             case .protected:
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
                     .foregroundStyle(.red)
                 Text(L10n.string("stop.protected"))
                     .font(.callout)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.primary.opacity(0.72))
             case .permissionDenied:
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
                     .foregroundStyle(.red)
                 Text(L10n.string("stop.permission"))
                     .font(.callout)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.primary.opacity(0.72))
             case .failed(let message):
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
                     .foregroundStyle(.red)
                 Text(message)
                     .font(.callout)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.primary.opacity(0.72))
             }
             Spacer()
         }
@@ -154,9 +148,9 @@ private struct ConfirmButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 13, weight: .semibold))
-            .foregroundStyle(kind == .destructive ? Color.white : Color.primary)
-            .padding(.vertical, 9)
+            .font(.system(size: 12, weight: .medium))
+            .foregroundStyle(kind == .destructive ? Color.white : Color.primary.opacity(0.82))
+            .frame(minHeight: 40)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(fill.opacity(configuration.isPressed ? 0.75 : 1))
@@ -168,7 +162,7 @@ private struct ConfirmButtonStyle: ButtonStyle {
     private var fill: Color {
         switch kind {
         case .cancel: Color.primary.opacity(0.08)
-        case .destructive: Color.red.opacity(0.9)
+        case .destructive: Color(.sRGB, red: 254 / 255, green: 40 / 255, blue: 47 / 255) // #FE282F
         }
     }
 }

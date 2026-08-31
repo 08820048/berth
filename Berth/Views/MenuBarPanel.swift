@@ -52,7 +52,7 @@ struct MenuBarPanel: View {
             .opacity(store.isStopModalPresented ? 0.28 : 1)
 
             if store.isStopModalPresented {
-                Color.black.opacity(0.38)
+                Color.black.opacity(0.08)
                     .ignoresSafeArea()
             }
 

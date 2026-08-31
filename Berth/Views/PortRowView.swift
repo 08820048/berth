@@ -136,7 +136,7 @@ struct PortRowView: View {
                     }
                 }
                 .buttonStyle(.borderless)
-                .foregroundStyle(Color.accentColor)
+                .foregroundStyle(Color(.sRGB, red: 254 / 255, green: 40 / 255, blue: 47 / 255)) // #FE282F
                 .disabled(store.isStopping || store.isStopModalPresented)
                 .help(L10n.string("row.release"))
                 .accessibilityLabel(L10n.string("a11y.stop", entry.port))
