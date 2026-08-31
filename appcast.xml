@@ -11,10 +11,7 @@
             <sparkle:version>3</sparkle:version>
             <sparkle:shortVersionString>0.1.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/08820048/berth/releases/download/v0.1.1/Berth-0.1.1.zip" length="4061495" type="application/octet-stream" sparkle:edSignature="TgBQoMJMRXF5Vd002Ir1kyXWfQJDauEQ2dUXJgoDUgoCHGDYrdCSn7hEK68oU/cxasapQqc3j1nUSMp35+kBBw=="/>
-            <sparkle:deltas>
-                <enclosure url="https://github.com/08820048/berth/releases/download/v0.1.1/Berth3-2.delta" sparkle:deltaFrom="2" length="313730" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="977808" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,uk" sparkle:edSignature="2/6dbSnqC19zio3dv8TN2pSt6fJUxcs5Lc4h2CGKT0cvAWeDzSRKIZWm67MT/xfhMSn5l5QvjkCydrC1DYmuBg=="/>
-            </sparkle:deltas>
+            <enclosure url="https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/Berth-0.1.1.zip" length="4063491" type="application/octet-stream" sparkle:edSignature="OYQUgLDrFP6j7uqwJKGnKsevQ6fjBpnSowWJNTh9zaCk48tvnYM606uPRuXC2Fr535ZpQsL04d4T+KFiM13cDg=="/>
         </item>
         <item>
             <title>0.1.0</title>
@@ -22,7 +19,7 @@
             <sparkle:version>2</sparkle:version>
             <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/08820048/berth/releases/download/v0.1.0/Berth-0.1.0.zip" length="3993489" type="application/octet-stream" sparkle:edSignature="LcLDYXSZSbZ+rQPKdwEJ5wk2Be8t5t/evBp20zD2a3bcX96zFHs9xpK4WBNRcmlp55h8cOk2Ia9IOJOPTxZIAA=="/>
+            <enclosure url="https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/Berth-0.1.0.zip" length="3993489" type="application/octet-stream" sparkle:edSignature="LcLDYXSZSbZ+rQPKdwEJ5wk2Be8t5t/evBp20zD2a3bcX96zFHs9xpK4WBNRcmlp55h8cOk2Ia9IOJOPTxZIAA=="/>
         </item>
         <item>
             <title>0.0001</title>
