@@ -69,8 +69,11 @@
 "settings.showSystem" = "Show system ports";
 "settings.updates" = "Software Update";
 "settings.autoCheckUpdates" = "Automatically check for updates";
-"settings.autoDownloadUpdates" = "Automatically download updates";
 "settings.checkForUpdates" = "Check for Updates…";
+"update.check" = "Check for Updates";
+"update.checking" = "Checking for Updates…";
+"update.downloading" = "Downloading Update…";
+"update.restart" = "Restart to Update";
 "settings.version" = "Version %@";
 "settings.watched" = "Watched ports";
 "settings.watchedHelp" = "Comma-separated list. Default covers common local dev ports.";

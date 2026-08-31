@@ -44,9 +44,11 @@ struct MenuBarPanel: View {
                 berthStrip
                 MenuHairline()
                 content
+                Spacer(minLength: 0)
                 MenuHairline()
                 footer
             }
+            .frame(maxHeight: .infinity, alignment: .top)
             .padding(.horizontal, 4)
             .frame(maxWidth: .infinity, alignment: .leading)
             .disabled(store.isStopModalPresented)
@@ -311,9 +313,59 @@ struct MenuBarPanel: View {
             .accessibilityLabel(L10n.string("settings.quit"))
             Spacer(minLength: 8)
             footerStatus
+            updateControl
         }
         .padding(.horizontal, 12)
         .frame(height: BerthLayout.footerRowHeight)
+    }
+
+    /// 右下角的更新入口：空闲时是“检查更新”，发现新版本后自动下载，
+    /// 下载完成后变为青绿色的“重启完成更新”。
+    @ViewBuilder
+    private var updateControl: some View {
+        switch updates.phase {
+        case .idle:
+            Button(L10n.string("update.check")) {
+                updates.checkForUpdates()
+            }
+            .buttonStyle(.plain)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .disabled(!updates.canCheckForUpdates)
+            .help(L10n.string("update.check"))
+        case .checking:
+            HStack(spacing: 5) {
+                ProgressView()
+                    .controlSize(.mini)
+                Text(L10n.string("update.checking"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .fixedSize()
+        case .downloading:
+            HStack(spacing: 5) {
+                ProgressView()
+                    .controlSize(.mini)
+                Text(L10n.string("update.downloading"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .fixedSize()
+        case .readyToInstall:
+            Button {
+                updates.restartToUpdate()
+            } label: {
+                Text(L10n.string("update.restart"))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+            }
+            .buttonStyle(.plain)
+            .background(Color.teal, in: Capsule())
+            .help(L10n.string("update.restart"))
+            .accessibilityLabel(L10n.string("update.restart"))
+        }
     }
 
     @ViewBuilder

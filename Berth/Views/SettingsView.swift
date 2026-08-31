@@ -10,7 +10,6 @@ struct SettingsView: View {
     @State private var launchAtLogin: Bool = false
     @State private var recordingHotKey = false
     @State private var automaticallyChecksForUpdates = true
-    @State private var automaticallyDownloadsUpdates = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -44,14 +43,13 @@ struct SettingsView: View {
             }
             .scrollIndicators(.automatic)
         }
-        .frame(minHeight: 520, maxHeight: .infinity, alignment: .top)
+        .frame(minHeight: BerthLayout.settingsMinHeight, maxHeight: .infinity, alignment: .top)
         .background(Color.primary.opacity(0.025))
         .toggleStyle(.switch)
         .onAppear {
             watchedText = settings.watchedPortsText
             launchAtLogin = settings.launchAtLogin
             automaticallyChecksForUpdates = updates.automaticallyChecksForUpdates
-            automaticallyDownloadsUpdates = updates.automaticallyDownloadsUpdates
         }
         .onDisappear {
             HotKeyCenter.shared.isPaused = false
@@ -74,15 +72,6 @@ struct SettingsView: View {
                 )
                 .onChange(of: automaticallyChecksForUpdates) { _, enabled in
                     updates.setAutomaticallyChecksForUpdates(enabled)
-                }
-
-                settingToggle(
-                    L10n.string("settings.autoDownloadUpdates"),
-                    isOn: $automaticallyDownloadsUpdates
-                )
-                .disabled(!automaticallyChecksForUpdates)
-                .onChange(of: automaticallyDownloadsUpdates) { _, enabled in
-                    updates.setAutomaticallyDownloadsUpdates(enabled)
                 }
 
                 HStack {

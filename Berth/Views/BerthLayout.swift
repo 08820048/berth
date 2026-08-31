@@ -6,12 +6,14 @@ enum BerthLayout {
     static let rowHeight: CGFloat = 47
     static let groupHeaderHeight: CGFloat = 27
     // Keep the native menu-bar card compact while project cards stay collapsed by default.
-    static let maxListHeight: CGFloat = 380
-    static let minListHeight: CGFloat = 300
+    static let maxListHeight: CGFloat = 500
+    static let minListHeight: CGFloat = 360
     static let emptyListHeight: CGFloat = 88
     static let headerHeight: CGFloat = 36
     static let searchHeight: CGFloat = 34
     static let footerRowHeight: CGFloat = 36
+    // 让设置面板在常见内容量下（中英文）无需滚动即可完整展示。
+    static let settingsMinHeight: CGFloat = 768
 
 }
 
