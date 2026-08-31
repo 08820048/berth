@@ -23,6 +23,7 @@ struct SettingsView: View {
 
                 Text(L10n.string("settings.title"))
                     .font(.headline)
+                    .foregroundStyle(Color.primary.opacity(0.82))
                 Spacer()
             }
             .padding(.horizontal, 8)
@@ -41,6 +42,7 @@ struct SettingsView: View {
         }
         .frame(minHeight: 520, maxHeight: .infinity, alignment: .top)
         .background(Color.primary.opacity(0.025))
+        .toggleStyle(.switch)
         .onAppear {
             watchedText = settings.watchedPortsText
             launchAtLogin = settings.launchAtLogin
@@ -60,7 +62,7 @@ struct SettingsView: View {
                 .foregroundStyle(.secondary)
 
             VStack(alignment: .leading, spacing: 14) {
-                Toggle(L10n.string("settings.launchAtLogin"), isOn: $launchAtLogin)
+                settingToggle(L10n.string("settings.launchAtLogin"), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, enabled in
                         do {
                             try settings.setLaunchAtLogin(enabled)
@@ -79,26 +81,30 @@ struct SettingsView: View {
 
                 HStack {
                     Text(L10n.string("settings.refresh"))
+                        .foregroundStyle(.secondary)
                     Spacer()
                     Stepper(value: $settings.refreshInterval, in: 1...15, step: 1) {
                         Text(L10n.string("settings.refreshUnit", Int(settings.refreshInterval)))
                             .font(.caption)
+                            .foregroundStyle(.secondary)
                             .monospacedDigit()
                     }
                     .fixedSize()
                 }
 
-                Toggle(L10n.string("settings.menuBarCount"), isOn: $settings.showMenuBarCount)
-                Toggle(L10n.string("settings.showSystem"), isOn: $settings.showSystemPorts)
+                settingToggle(L10n.string("settings.menuBarCount"), isOn: $settings.showMenuBarCount)
+                settingToggle(L10n.string("settings.showSystem"), isOn: $settings.showSystemPorts)
 
                 HStack {
                     Text(L10n.string("settings.hotkey"))
+                        .foregroundStyle(.secondary)
                     Spacer()
                     HotKeyRecorder(spec: $settings.hotKey, recording: $recordingHotKey)
                 }
             }
             .font(.system(size: 12))
             .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
     }
@@ -138,6 +144,7 @@ struct SettingsView: View {
                             Text(label(for: rule))
                                 .lineLimit(1)
                                 .truncationMode(.middle)
+                                .foregroundStyle(.secondary)
                             Spacer()
                             Button(role: .destructive) {
                                 settings.unignore(rule)
@@ -159,6 +166,17 @@ struct SettingsView: View {
             Text(L10n.string("settings.ignoreHelp"))
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
+        }
+    }
+
+    private func settingToggle(_ title: String, isOn: Binding<Bool>) -> some View {
+        HStack {
+            Text(title)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Toggle(title, isOn: isOn)
+                .labelsHidden()
+                .fixedSize()
         }
     }
 

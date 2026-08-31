@@ -92,6 +92,7 @@ struct MenuBarPanel: View {
         HStack(spacing: 8) {
             Text("Berth")
                 .font(.headline)
+                .foregroundStyle(Color.primary.opacity(0.82))
             Spacer()
             Text(L10n.string("header.count", store.visibleEntries.count))
                 .font(.caption)
@@ -111,6 +112,7 @@ struct MenuBarPanel: View {
             TextField(L10n.string("search.placeholder"), text: $store.searchText)
                 .textFieldStyle(.plain)
                 .font(.system(size: 12))
+                .foregroundStyle(Color.primary.opacity(0.82))
                 .onSubmit(submitCommand)
         }
         .padding(.horizontal, 12)
@@ -223,6 +225,7 @@ struct MenuBarPanel: View {
                 VStack(spacing: 8) {
                     Text(L10n.string("scan.failed"))
                         .font(.subheadline)
+                        .foregroundStyle(.secondary)
                     Text(scanError)
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -289,8 +292,6 @@ struct MenuBarPanel: View {
 
     private var footer: some View {
         HStack(spacing: 8) {
-            footerStatus
-            Spacer(minLength: 8)
             Button {
                 setSettingsPresented(!isSettingsPresented)
             } label: {
@@ -305,6 +306,8 @@ struct MenuBarPanel: View {
             }
             .buttonStyle(QuietIconButtonStyle())
             .help(L10n.string("settings.quit"))
+            Spacer(minLength: 8)
+            footerStatus
         }
         .padding(.horizontal, 12)
         .frame(height: BerthLayout.footerRowHeight)
@@ -360,6 +363,7 @@ private struct BerthSlotView: View {
                     .frame(width: 5, height: 5)
                 Text("\(port)")
                     .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(Color.primary.opacity(0.82))
             }
             if isReleasing {
                 ProgressView().controlSize(.mini)
@@ -411,6 +415,7 @@ private struct ProjectCardView: View {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(section.title)
                             .font(.system(.subheadline, weight: .semibold))
+                            .foregroundStyle(Color.primary.opacity(0.82))
                             .lineLimit(1)
                         Text(summary)
                             .font(.caption2)
@@ -459,6 +464,7 @@ private struct GroupHeaderView: View {
             }
             Text(section.title)
                 .font(.system(.subheadline, weight: .semibold))
+                .foregroundStyle(Color.primary.opacity(0.82))
                 .lineLimit(1)
             if let path = compactPath {
                 Text(path)

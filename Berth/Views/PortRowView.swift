@@ -20,7 +20,7 @@ struct PortRowView: View {
 
                 Text(rowTitle)
                     .font(.system(size: 12, weight: .regular))
-                    .foregroundStyle(.primary.opacity(0.88))
+                    .foregroundStyle(Color.primary.opacity(0.82))
                     .lineLimit(1)
 
                 Spacer(minLength: 8)
