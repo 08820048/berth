@@ -34,3 +34,10 @@ open Berth.xcodeproj
 ```
 
 独立分发，默认不启用 App Sandbox，否则读不全其他进程的监听信息。
+
+## 许可证
+
+Berth 使用 [Apache License 2.0](LICENSE) 开源。第三方组件的授权信息见
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
+Copyright © 2026 xuyi
