@@ -13,6 +13,7 @@
 		05BC380B412913F3F2241E8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C22CE8F961A5674DFE5835C /* Assets.xcassets */; };
 		05E3D5BD54E5970F36EDD393 /* MenuBarExtraAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D184A18E57A113831FEBA310 /* MenuBarExtraAccess */; };
 		0CF656BEA005BA2EBBFCC7FE /* IgnoreRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE89D4704012084E2EA903EB /* IgnoreRuleTests.swift */; };
+		1377C8B2EB7FC748B53E27D0 /* PanelWindowAnchorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97623D54756CB5168B66402F /* PanelWindowAnchorTests.swift */; };
 		2A17A96D615F05A239B906ED /* PortScanEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935CE4B10B5B3C7097EF1BD9 /* PortScanEngineTests.swift */; };
 		2E3CD2DAE2CCAF6CBFEFDD1A /* FrameworkDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C5F9CB21CCC06320A01B3D /* FrameworkDetector.swift */; };
 		33EC8D789DF0D075242347E1 /* FrameworkIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874CA249600E594EC4DC8F0B /* FrameworkIcon.swift */; };
@@ -40,7 +41,6 @@
 		E9D6DB7DD82179F289E8A286 /* StopConfirmPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25B53B8AFB5D04E747316D3 /* StopConfirmPanel.swift */; };
 		EEF2087AE00602662F579D69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993F0CF4A341C97B8B01092 /* AppDelegate.swift */; };
 		EF68B1C5CC48C3418144AC5C /* ProjectNameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C954CC1DBD73F4EB3C4EF31 /* ProjectNameResolver.swift */; };
-		F37AC0C2430714540A8E29F1 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB77BAA52A8144DC7E114D /* SettingsWindowController.swift */; };
 		F8B6987C8A078813FECA2067 /* ProtectedProcessPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A213237017B3E501B7CC6424 /* ProtectedProcessPolicy.swift */; };
 		FFC13BF51A616FBF4FF30EF1 /* KillPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2AD08629D2DB150D3127F9 /* KillPolicyTests.swift */; };
 /* End PBXBuildFile section */
@@ -75,10 +75,10 @@
 		72108FCF5A3E58AA9B5D838F /* BerthTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BerthTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		725798EFCB1AD73CF37AA2E7 /* Berth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Berth.entitlements; sourceTree = "<group>"; };
 		73401CAB58FF59B53AEAA2C4 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
-		79FB77BAA52A8144DC7E114D /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		874CA249600E594EC4DC8F0B /* FrameworkIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkIcon.swift; sourceTree = "<group>"; };
 		918848609FCD11A3F8BB15BF /* BerthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BerthApp.swift; sourceTree = "<group>"; };
 		935CE4B10B5B3C7097EF1BD9 /* PortScanEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScanEngineTests.swift; sourceTree = "<group>"; };
+		97623D54756CB5168B66402F /* PanelWindowAnchorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelWindowAnchorTests.swift; sourceTree = "<group>"; };
 		99C5F9CB21CCC06320A01B3D /* FrameworkDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkDetector.swift; sourceTree = "<group>"; };
 		9A358F06BB96FBEF46F1BBAF /* FrameworkDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkDetectorTests.swift; sourceTree = "<group>"; };
 		9BD2E8634B7AD178B01AD102 /* DockerInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockerInspector.swift; sourceTree = "<group>"; };
@@ -133,7 +133,6 @@
 				6993F0CF4A341C97B8B01092 /* AppDelegate.swift */,
 				15E78FDFF4BDCCEE6E5816DA /* HotKey.swift */,
 				73401CAB58FF59B53AEAA2C4 /* L10n.swift */,
-				79FB77BAA52A8144DC7E114D /* SettingsWindowController.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -146,6 +145,7 @@
 				BE89D4704012084E2EA903EB /* IgnoreRuleTests.swift */,
 				FE2AD08629D2DB150D3127F9 /* KillPolicyTests.swift */,
 				56A1312C52F0769822205BDE /* LsofParserTests.swift */,
+				97623D54756CB5168B66402F /* PanelWindowAnchorTests.swift */,
 				935CE4B10B5B3C7097EF1BD9 /* PortScanEngineTests.swift */,
 				2005052EE5405DD32FBB0D42 /* ProjectNameResolverTests.swift */,
 				19C178A9D149EC75A8FBCBC7 /* RecencySortTests.swift */,
@@ -351,7 +351,6 @@
 				EF68B1C5CC48C3418144AC5C /* ProjectNameResolver.swift in Sources */,
 				F8B6987C8A078813FECA2067 /* ProtectedProcessPolicy.swift in Sources */,
 				01F57B0A42F7186E5A8CA059 /* SettingsView.swift in Sources */,
-				F37AC0C2430714540A8E29F1 /* SettingsWindowController.swift in Sources */,
 				E9D6DB7DD82179F289E8A286 /* StopConfirmPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +364,7 @@
 				0CF656BEA005BA2EBBFCC7FE /* IgnoreRuleTests.swift in Sources */,
 				FFC13BF51A616FBF4FF30EF1 /* KillPolicyTests.swift in Sources */,
 				799DDACF6984628392920B02 /* LsofParserTests.swift in Sources */,
+				1377C8B2EB7FC748B53E27D0 /* PanelWindowAnchorTests.swift in Sources */,
 				2A17A96D615F05A239B906ED /* PortScanEngineTests.swift in Sources */,
 				7B5F5EF30F62679DC126DEB8 /* ProjectNameResolverTests.swift in Sources */,
 				7058946AF8041AAA1903868D /* RecencySortTests.swift in Sources */,

@@ -13,8 +13,9 @@ struct BerthApp: App {
             MenuBarPanel(
                 store: appDelegate.model.store,
                 settings: appDelegate.model.settings,
-                onOpenSettings: { appDelegate.openSettings() }
+                onSettingsTransition: { appDelegate.anchorPanelRightEdge() }
             )
+            .introspectMenuBarExtraWindow { appDelegate.bindPanelWindow($0) }
         } label: {
             MenuBarLabel(store: appDelegate.model.store, settings: appDelegate.model.settings)
         }
@@ -22,10 +23,6 @@ struct BerthApp: App {
             appDelegate.bindPanelPresentation(menuPresentation)
         }
         .menuBarExtraStyle(.window)
-
-        Settings {
-            SettingsView(settings: appDelegate.model.settings)
-        }
     }
 }
 

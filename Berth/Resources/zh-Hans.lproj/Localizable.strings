@@ -57,6 +57,7 @@
 "database.confirm.body" = "这是数据库，停掉会影响本机使用 :%d 的项目。";
 "database.confirm.action" = "停止";
 "settings.title" = "设置";
+"settings.close" = "关闭设置";
 "settings.general" = "通用";
 "settings.launchAtLogin" = "登录时启动";
 "settings.refresh" = "刷新间隔";

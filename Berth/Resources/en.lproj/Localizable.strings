@@ -57,6 +57,7 @@
 "database.confirm.body" = "This is a database. Stopping it will affect local projects using :%d.";
 "database.confirm.action" = "Stop";
 "settings.title" = "Settings";
+"settings.close" = "Close settings";
 "settings.general" = "General";
 "settings.launchAtLogin" = "Launch at login";
 "settings.refresh" = "Refresh interval";

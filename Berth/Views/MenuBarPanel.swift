@@ -4,11 +4,38 @@ import SwiftUI
 struct MenuBarPanel: View {
     @Bindable var store: PortStore
     var settings: AppSettings
-    var onOpenSettings: () -> Void
+    var onSettingsTransition: () -> Void
     @State private var selectedPort: Int?
     @State private var isPortsExpanded = false
+    @State private var isSettingsPresented = false
 
     var body: some View {
+        HStack(spacing: 0) {
+            if isSettingsPresented {
+                SettingsView(settings: settings) {
+                    setSettingsPresented(false)
+                }
+                .frame(width: BerthLayout.settingsWidth)
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+            }
+
+            portPanel
+        }
+        .frame(
+            width: BerthLayout.panelWidth + (isSettingsPresented ? BerthLayout.settingsWidth : 0),
+            alignment: .trailing
+        )
+        .clipped()
+        .animation(.smooth(duration: 0.28), value: isSettingsPresented)
+        .onAppear {
+            if selectedPort == nil {
+                selectedPort = watchedPorts.first(where: { port in store.entries.contains { $0.port == port } }) ?? watchedPorts.first
+            }
+            Task { await store.refresh() }
+        }
+    }
+
+    private var portPanel: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 header
@@ -41,12 +68,6 @@ struct MenuBarPanel: View {
         }
         .frame(width: BerthLayout.panelWidth)
         .animation(.easeOut(duration: 0.15), value: store.stopPrompt?.id)
-        .onAppear {
-            if selectedPort == nil {
-                selectedPort = watchedPorts.first(where: { port in store.entries.contains { $0.port == port } }) ?? watchedPorts.first
-            }
-            Task { await store.refresh() }
-        }
     }
 
     private var isEmptyList: Bool {
@@ -271,9 +292,9 @@ struct MenuBarPanel: View {
             footerStatus
             Spacer(minLength: 8)
             Button {
-                onOpenSettings()
+                setSettingsPresented(!isSettingsPresented)
             } label: {
-                Image(systemName: "gearshape")
+                Image(systemName: isSettingsPresented ? "gearshape.fill" : "gearshape")
             }
             .buttonStyle(QuietIconButtonStyle())
             .help(L10n.string("settings.title"))
@@ -316,6 +337,11 @@ struct MenuBarPanel: View {
                 }
             }
         }
+    }
+
+    private func setSettingsPresented(_ presented: Bool) {
+        onSettingsTransition()
+        isSettingsPresented = presented
     }
 
 }

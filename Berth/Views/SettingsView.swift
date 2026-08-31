@@ -3,14 +3,63 @@ import SwiftUI
 
 struct SettingsView: View {
     @Bindable var settings: AppSettings
+    var onClose: () -> Void
     @State private var watchedText: String = ""
     @State private var loginError: String?
     @State private var launchAtLogin: Bool = false
     @State private var recordingHotKey = false
 
     var body: some View {
-        Form {
-            Section(L10n.string("settings.general")) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 8) {
+                Button(action: onClose) {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .semibold))
+                        .frame(width: 40, height: 40)
+                }
+                .buttonStyle(QuietIconButtonStyle())
+                .help(L10n.string("settings.close"))
+                .accessibilityLabel(L10n.string("settings.close"))
+
+                Text(L10n.string("settings.title"))
+                    .font(.headline)
+                Spacer()
+            }
+            .padding(.horizontal, 8)
+            .frame(height: 48)
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    generalSettings
+                    watchedPortsSettings
+                    ignoredSettings
+                }
+                .padding(.horizontal, 14)
+                .padding(.bottom, 16)
+            }
+            .scrollIndicators(.automatic)
+        }
+        .frame(minHeight: 520, maxHeight: .infinity, alignment: .top)
+        .background(Color.primary.opacity(0.025))
+        .onAppear {
+            watchedText = settings.watchedPortsText
+            launchAtLogin = settings.launchAtLogin
+        }
+        .onDisappear {
+            HotKeyCenter.shared.isPaused = false
+        }
+        .onChange(of: recordingHotKey) { _, recording in
+            HotKeyCenter.shared.isPaused = recording
+        }
+    }
+
+    private var generalSettings: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(L10n.string("settings.general"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+            VStack(alignment: .leading, spacing: 14) {
                 Toggle(L10n.string("settings.launchAtLogin"), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, enabled in
                         do {
@@ -21,86 +70,95 @@ struct SettingsView: View {
                             launchAtLogin = settings.launchAtLogin
                         }
                     }
+
                 if let loginError {
                     Text(loginError)
                         .font(.caption)
                         .foregroundStyle(.red)
                 }
 
-                LabeledContent(L10n.string("settings.refresh")) {
+                HStack {
+                    Text(L10n.string("settings.refresh"))
+                    Spacer()
                     Stepper(value: $settings.refreshInterval, in: 1...15, step: 1) {
                         Text(L10n.string("settings.refreshUnit", Int(settings.refreshInterval)))
+                            .font(.caption)
                             .monospacedDigit()
                     }
-                    .frame(width: 140)
+                    .fixedSize()
                 }
 
                 Toggle(L10n.string("settings.menuBarCount"), isOn: $settings.showMenuBarCount)
                 Toggle(L10n.string("settings.showSystem"), isOn: $settings.showSystemPorts)
 
-                LabeledContent(L10n.string("settings.hotkey")) {
+                HStack {
+                    Text(L10n.string("settings.hotkey"))
+                    Spacer()
                     HotKeyRecorder(spec: $settings.hotKey, recording: $recordingHotKey)
                 }
             }
+            .font(.system(size: 12))
+            .padding(12)
+            .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+    }
 
-            Section {
-                TextField(L10n.string("settings.watched"), text: $watchedText, axis: .vertical)
-                    .lineLimit(2...4)
-                    .onChange(of: watchedText) { _, newValue in
-                        settings.watchedPortsText = newValue
-                    }
-            } header: {
-                Text(L10n.string("settings.watched"))
-            } footer: {
-                Text(L10n.string("settings.watchedHelp"))
-            }
+    private var watchedPortsSettings: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L10n.string("settings.watched"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
 
-            Section {
+            TextField(L10n.string("settings.watched"), text: $watchedText, axis: .vertical)
+                .textFieldStyle(.roundedBorder)
+                .lineLimit(2...4)
+                .onChange(of: watchedText) { _, newValue in
+                    settings.watchedPortsText = newValue
+                }
+
+            Text(L10n.string("settings.watchedHelp"))
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+    }
+
+    private var ignoredSettings: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L10n.string("settings.ignore"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+            VStack(alignment: .leading, spacing: 10) {
                 if settings.ignoreRules.isEmpty {
                     Text(L10n.string("settings.ignoreEmpty"))
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(settings.ignoreRules) { rule in
-                        HStack {
+                        HStack(spacing: 8) {
                             Text(label(for: rule))
                                 .lineLimit(1)
+                                .truncationMode(.middle)
                             Spacer()
                             Button(role: .destructive) {
                                 settings.unignore(rule)
                             } label: {
                                 Image(systemName: "minus.circle.fill")
+                                    .frame(width: 28, height: 28)
                             }
                             .buttonStyle(.borderless)
                             .accessibilityLabel(L10n.string("settings.ignoreRemove"))
                         }
                     }
                 }
-            } header: {
-                Text(L10n.string("settings.ignore"))
-            } footer: {
-                Text(L10n.string("settings.ignoreHelp"))
             }
+            .font(.system(size: 12))
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
-            Section {
-                Button(L10n.string("settings.quit"), role: .destructive) {
-                    NSApp.terminate(nil)
-                }
-            }
-        }
-        .formStyle(.grouped)
-        .frame(minWidth: 460, minHeight: 520)
-        .navigationTitle(L10n.string("settings.title"))
-        .onAppear {
-            watchedText = settings.watchedPortsText
-            launchAtLogin = settings.launchAtLogin
-            BerthAppDelegate.shared?.revealForSettings()
-        }
-        .onDisappear {
-            HotKeyCenter.shared.isPaused = false
-            BerthAppDelegate.shared?.returnToAccessory()
-        }
-        .onChange(of: recordingHotKey) { _, recording in
-            HotKeyCenter.shared.isPaused = recording
+            Text(L10n.string("settings.ignoreHelp"))
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
         }
     }
 

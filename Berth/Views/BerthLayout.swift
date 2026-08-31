@@ -2,6 +2,7 @@ import SwiftUI
 
 enum BerthLayout {
     static let panelWidth: CGFloat = 380
+    static let settingsWidth: CGFloat = 320
     static let rowHeight: CGFloat = 47
     static let groupHeaderHeight: CGFloat = 27
     // Keep the native menu-bar card compact while project cards stay collapsed by default.
