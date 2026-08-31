@@ -64,6 +64,9 @@
 "settings.language.help" = "切换后立即生效，无需重启。";
 "settings.launchAtLogin" = "登录时启动";
 "settings.refresh" = "刷新间隔";
+"settings.refreshMode.live" = "实时 1秒";
+"settings.refreshMode.standard" = "标准 3秒";
+"settings.refreshMode.powerSaver" = "省电 10秒";
 "settings.refreshUnit" = "%d 秒";
 "settings.menuBarCount" = "菜单栏显示开发端口数量";
 "settings.showSystem" = "显示系统端口";

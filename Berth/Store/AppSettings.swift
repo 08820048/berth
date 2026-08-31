@@ -7,6 +7,27 @@ enum WatchedPorts {
     ]
 }
 
+enum RefreshMode: String, CaseIterable, Identifiable {
+    case live, standard, powerSaver
+
+    var id: String { rawValue }
+
+    var seconds: Double {
+        switch self {
+        case .live: 1
+        case .standard: 3
+        case .powerSaver: 10
+        }
+    }
+
+    /// 将旧的逐秒取值就近归入档位（老用户无感迁移）。
+    static func nearest(to interval: Double) -> RefreshMode {
+        if interval <= 2 { return .live }
+        if interval <= 6 { return .standard }
+        return .powerSaver
+    }
+}
+
 @MainActor
 @Observable
 final class AppSettings {
@@ -31,6 +52,12 @@ final class AppSettings {
 
     var refreshInterval: Double {
         didSet { UserDefaults.standard.set(refreshInterval, forKey: Keys.refreshInterval) }
+    }
+
+    /// 刷新档位（实时/标准/省电），实际存储仍为 refreshInterval 秒数。
+    var refreshMode: RefreshMode {
+        get { RefreshMode.nearest(to: refreshInterval) }
+        set { refreshInterval = newValue.seconds }
     }
 
     var showMenuBarCount: Bool {

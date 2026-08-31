@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var launchAtLogin: Bool = false
     @State private var recordingHotKey = false
     @State private var automaticallyChecksForUpdates = true
+    @Namespace private var refreshModeNS
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -145,13 +146,15 @@ struct SettingsView: View {
                     Text(L10n.string("settings.refresh"))
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Stepper(value: $settings.refreshInterval, in: 1...15, step: 1) {
-                        Text(L10n.string("settings.refreshUnit", Int(settings.refreshInterval)))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .monospacedDigit()
+                    HStack(spacing: 4) {
+                        ForEach(RefreshMode.allCases) { mode in
+                            refreshModeChip(mode)
+                        }
                     }
-                    .fixedSize()
+                    .animation(
+                        .spring(response: 0.4, dampingFraction: 0.7),
+                        value: settings.refreshMode
+                    )
                 }
 
                 settingToggle(L10n.string("settings.menuBarCount"), isOn: $settings.showMenuBarCount)
@@ -229,6 +232,32 @@ struct SettingsView: View {
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
         }
+    }
+
+    private func refreshModeChip(_ mode: RefreshMode) -> some View {
+        let isSelected = settings.refreshMode == mode
+        return Button {
+            settings.refreshMode = mode
+        } label: {
+            Text(L10n.string("settings.refreshMode.\(mode.rawValue)"))
+                .font(.caption2)
+                .padding(.horizontal, 7)
+                .padding(.vertical, 4)
+                .background {
+                    if isSelected {
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(Color.accentColor.opacity(0.15))
+                            .matchedGeometryEffect(id: "refreshModePill", in: refreshModeNS)
+                    }
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 1)
+                }
+                .foregroundStyle(isSelected ? Color.primary : Color.secondary)
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 
     private func settingToggle(_ title: String, isOn: Binding<Bool>) -> some View {

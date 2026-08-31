@@ -64,6 +64,9 @@
 "settings.language.help" = "Applies immediately. No restart required.";
 "settings.launchAtLogin" = "Launch at login";
 "settings.refresh" = "Refresh interval";
+"settings.refreshMode.live" = "Live 1s";
+"settings.refreshMode.standard" = "Standard 3s";
+"settings.refreshMode.powerSaver" = "Power saver 10s";
 "settings.refreshUnit" = "%d seconds";
 "settings.menuBarCount" = "Show port count in menu bar";
 "settings.showSystem" = "Show system ports";
