@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Berth Updates</title>
+        <link>https://github.com/08820048/berth</link>
+        <description>Berth release updates.</description>
+        <language>en</language>
+        <item>
+            <title>0.0001</title>
+            <pubDate>Mon, 31 Aug 2026 13:28:27 +0800</pubDate>
+            <sparkle:version>1</sparkle:version>
+            <sparkle:shortVersionString>0.0001</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/Berth-0.0001.zip" length="4081060" type="application/octet-stream" sparkle:edSignature="7+tqYIYRic6GW/LITnTzJNvYEA7ZTbzSyC+3WP3r8GXiJlwPkQ1dajeTOB1qBenFFoTiZvpjnTHxQAhFdvjFBA=="/>
+        </item>
+    </channel>
+</rss>

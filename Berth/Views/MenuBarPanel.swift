@@ -4,6 +4,7 @@ import SwiftUI
 struct MenuBarPanel: View {
     @Bindable var store: PortStore
     var settings: AppSettings
+    var updates: UpdateService
     var onSettingsTransition: () -> Void
     @State private var selectedPort: Int?
     @State private var isPortsExpanded = false
@@ -12,7 +13,7 @@ struct MenuBarPanel: View {
     var body: some View {
         HStack(spacing: 0) {
             if isSettingsPresented {
-                SettingsView(settings: settings) {
+                SettingsView(settings: settings, updates: updates) {
                     setSettingsPresented(false)
                 }
                 .frame(width: BerthLayout.settingsWidth)

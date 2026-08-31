@@ -67,6 +67,11 @@
 "settings.refreshUnit" = "%d 秒";
 "settings.menuBarCount" = "菜单栏显示开发端口数量";
 "settings.showSystem" = "显示系统端口";
+"settings.updates" = "软件更新";
+"settings.autoCheckUpdates" = "自动检查更新";
+"settings.autoDownloadUpdates" = "自动下载更新";
+"settings.checkForUpdates" = "检查更新…";
+"settings.version" = "版本 %@";
 "settings.watched" = "关注端口";
 "settings.watchedHelp" = "用逗号分隔。默认覆盖常见本地开发端口。";
 "settings.loginError" = "无法更新登录项：%@";

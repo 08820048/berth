@@ -3,11 +3,14 @@ import SwiftUI
 
 struct SettingsView: View {
     @Bindable var settings: AppSettings
+    @ObservedObject var updates: UpdateService
     var onClose: () -> Void
     @State private var watchedText: String = ""
     @State private var loginError: String?
     @State private var launchAtLogin: Bool = false
     @State private var recordingHotKey = false
+    @State private var automaticallyChecksForUpdates = true
+    @State private var automaticallyDownloadsUpdates = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -32,6 +35,7 @@ struct SettingsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     generalSettings
+                    updateSettings
                     watchedPortsSettings
                     ignoredSettings
                 }
@@ -46,12 +50,57 @@ struct SettingsView: View {
         .onAppear {
             watchedText = settings.watchedPortsText
             launchAtLogin = settings.launchAtLogin
+            automaticallyChecksForUpdates = updates.automaticallyChecksForUpdates
+            automaticallyDownloadsUpdates = updates.automaticallyDownloadsUpdates
         }
         .onDisappear {
             HotKeyCenter.shared.isPaused = false
         }
         .onChange(of: recordingHotKey) { _, recording in
             HotKeyCenter.shared.isPaused = recording
+        }
+    }
+
+    private var updateSettings: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(L10n.string("settings.updates"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+
+            VStack(alignment: .leading, spacing: 14) {
+                settingToggle(
+                    L10n.string("settings.autoCheckUpdates"),
+                    isOn: $automaticallyChecksForUpdates
+                )
+                .onChange(of: automaticallyChecksForUpdates) { _, enabled in
+                    updates.setAutomaticallyChecksForUpdates(enabled)
+                }
+
+                settingToggle(
+                    L10n.string("settings.autoDownloadUpdates"),
+                    isOn: $automaticallyDownloadsUpdates
+                )
+                .disabled(!automaticallyChecksForUpdates)
+                .onChange(of: automaticallyDownloadsUpdates) { _, enabled in
+                    updates.setAutomaticallyDownloadsUpdates(enabled)
+                }
+
+                HStack {
+                    Text(L10n.string("settings.version", appVersion))
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button(L10n.string("settings.checkForUpdates")) {
+                        updates.checkForUpdates()
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .disabled(!updates.canCheckForUpdates)
+                }
+            }
+            .font(.system(size: 12))
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         }
     }
 
@@ -210,6 +259,10 @@ struct SettingsView: View {
         case .path(let value):
             return L10n.string("settings.ignorePath", value)
         }
+    }
+
+    private var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
     }
 }
 

@@ -26,5 +26,13 @@
 	<true/>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>WPgzx2GIqY8DUPWOe6OuHrr1BecMrHaoUknSdM245dw=</string>
 </dict>
 </plist>

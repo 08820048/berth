@@ -67,6 +67,11 @@
 "settings.refreshUnit" = "%d seconds";
 "settings.menuBarCount" = "Show port count in menu bar";
 "settings.showSystem" = "Show system ports";
+"settings.updates" = "Software Update";
+"settings.autoCheckUpdates" = "Automatically check for updates";
+"settings.autoDownloadUpdates" = "Automatically download updates";
+"settings.checkForUpdates" = "Check for Updates…";
+"settings.version" = "Version %@";
 "settings.watched" = "Watched ports";
 "settings.watchedHelp" = "Comma-separated list. Default covers common local dev ports.";
 "settings.loginError" = "Could not update login item: %@";

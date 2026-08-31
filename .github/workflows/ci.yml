@@ -12,4 +12,6 @@ jobs:
       - name: Generate project
         run: xcodegen generate
       - name: Test
-        run: xcodebuild -project Berth.xcodeproj -scheme Berth -destination 'platform=macOS' test
+        run: >-
+          xcodebuild -project Berth.xcodeproj -scheme Berth -destination 'platform=macOS'
+          CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= test

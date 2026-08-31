@@ -13,6 +13,7 @@ struct BerthApp: App {
             MenuBarPanel(
                 store: appDelegate.model.store,
                 settings: appDelegate.model.settings,
+                updates: appDelegate.model.updates,
                 onSettingsTransition: { appDelegate.anchorPanelRightEdge() }
             )
             .introspectMenuBarExtraWindow { appDelegate.bindPanelWindow($0) }
@@ -33,10 +34,12 @@ struct BerthApp: App {
 final class AppModel {
     let settings: AppSettings
     let store: PortStore
+    let updates: UpdateService
 
     init() {
         let settings = AppSettings()
         self.settings = settings
         self.store = PortStore(settings: settings)
+        self.updates = UpdateService()
     }
 }

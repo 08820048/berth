@@ -1,3 +1,6 @@
+<!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires updating signatures in appcasts that reference this file! This will involve re-running generate_appcast or sign_update.
+-->
 # Berth
 
 本地端口泊位看板。macOS 菜单栏应用：看见谁占了口，判断能不能杀，停掉，确认口已经空出来。
@@ -25,6 +28,7 @@ make run
 - Docker / OrbStack / Colima 显示容器名；停止时优先 `docker stop`
 - 运行时长、CPU、内存采样
 - 全局快捷键打开面板（默认 ⌥⌘P，可改）
+- 使用 Sparkle 自动检查、下载并安装更新
 
 ## 开发
 
@@ -34,6 +38,21 @@ open Berth.xcodeproj
 ```
 
 独立分发，默认不启用 App Sandbox，否则读不全其他进程的监听信息。
+
+## 发布更新
+
+Berth 使用 Sparkle 2，通过仓库根目录的 `appcast.xml` 获取更新。发布新版时，
+递增 `MARKETING_VERSION` 和 `CURRENT_PROJECT_VERSION`，将签名、公证后的 App 压缩包
+上传到 GitHub Release，再使用 Sparkle 的 `generate_appcast` 生成并提交新的 feed：
+
+```bash
+generate_appcast \
+  --account app.berth.macos \
+  --download-url-prefix https://github.com/08820048/berth/releases/download/<tag>/ \
+  -o appcast.xml <archives-directory>
+```
+
+Sparkle 更新私钥保存在发布机器的登录钥匙串中，不应提交到仓库。
 
 ## 许可证
 

@@ -19,6 +19,7 @@
 		3ED4E8AB3092CEF82B65F026 /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */; };
 		43DE0735C4E6207DD782DFD6 /* DockerInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD2E8634B7AD178B01AD102 /* DockerInspector.swift */; };
 		569503809EF3D10849B9AAC5 /* BerthLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1877995779C85F404441E /* BerthLayout.swift */; };
+		6868FE3040D289C23A530502 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3246BFDF887793AFFFA79C52 /* UpdateService.swift */; };
 		6D8BE8CFC7CBC0903ADAF878 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = A59BFD54FE0FDFF94707366D /* Localizable.stringsdict */; };
 		6EC6D9AF30C25B3599128AB7 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73401CAB58FF59B53AEAA2C4 /* L10n.swift */; };
 		6FA1BC91A6787E8B0F808141 /* PanelWindowAnchorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4358E2C41C0DAF8AF58AFF9 /* PanelWindowAnchorTests.swift */; };
@@ -36,6 +37,7 @@
 		AF6E7F493708BB295FF86D60 /* PortRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */; };
 		B50149380CFC26D0A7FDC4BF /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AC4659D9CA923EF72FE28 /* AppSettings.swift */; };
 		B512F2548E7D630BF104E162 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9988362C42F3852D74E123D7 /* Localizable.strings */; };
+		C5D25E05CC4F58D85701A8C4 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE857369DACB2BFCB867EA8 /* Sparkle */; };
 		CB39F8848E94A3AEF32D7C66 /* FrameworkDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A358F06BB96FBEF46F1BBAF /* FrameworkDetectorTests.swift */; };
 		CEC00110B21BE49D68D0A80B /* IgnoreRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6C3103FF7EA3397E99DB24 /* IgnoreRule.swift */; };
 		DCB5BA34E91A8BEBDEE9617B /* ProcessTerminator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5012799306C4828FD0C49F2 /* ProcessTerminator.swift */; };
@@ -68,6 +70,7 @@
 		2CC66CACE8A9E4BEA6060BEE /* PortStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortStore.swift; sourceTree = "<group>"; };
 		2F23DE35032E1BC73207DD7C /* LsofParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LsofParser.swift; sourceTree = "<group>"; };
 		309A61A6E9B6D936DB66A613 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3246BFDF887793AFFFA79C52 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
 		3D6C3103FF7EA3397E99DB24 /* IgnoreRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreRule.swift; sourceTree = "<group>"; };
 		43D3A1F4B6CC7425E1050C73 /* MenuBarIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconTests.swift; sourceTree = "<group>"; };
 		563B64E2A528C61E4F6BC666 /* ProcessInfoReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfoReader.swift; sourceTree = "<group>"; };
@@ -112,6 +115,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05E3D5BD54E5970F36EDD393 /* MenuBarExtraAccess in Frameworks */,
+				C5D25E05CC4F58D85701A8C4 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +180,7 @@
 				B5012799306C4828FD0C49F2 /* ProcessTerminator.swift */,
 				5C954CC1DBD73F4EB3C4EF31 /* ProjectNameResolver.swift */,
 				A213237017B3E501B7CC6424 /* ProtectedProcessPolicy.swift */,
+				3246BFDF887793AFFFA79C52 /* UpdateService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 			name = Berth;
 			packageProductDependencies = (
 				D184A18E57A113831FEBA310 /* MenuBarExtraAccess */,
+				9FE857369DACB2BFCB867EA8 /* Sparkle */,
 			);
 			productName = Berth;
 			productReference = E6D8ABF103601C3A407CD870 /* Berth.app */;
@@ -290,12 +296,12 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					339EAE0EF89126808F202626 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 9XAXTT7H29;
 						ProvisioningStyle = Automatic;
 					};
 					F440778D68F33EE8671420DA = {
-						DevelopmentTeam = "";
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 9XAXTT7H29;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -311,6 +317,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				186B134F9AB6747710DC5151 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */,
+				C218B7CEC5CCB6B82905E50A /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BF9EF2C868053945AA10ED83 /* Products */;
@@ -366,6 +373,7 @@
 				F8B6987C8A078813FECA2067 /* ProtectedProcessPolicy.swift in Sources */,
 				01F57B0A42F7186E5A8CA059 /* SettingsView.swift in Sources */,
 				E9D6DB7DD82179F289E8A286 /* StopConfirmPanel.swift in Sources */,
+				6868FE3040D289C23A530502 /* UpdateService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,7 +481,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9XAXTT7H29;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -528,11 +536,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Berth/Berth.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Berth/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Berth;
@@ -544,7 +552,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.0001;
 				PRODUCT_BUNDLE_IDENTIFIER = app.berth.macos;
 				PRODUCT_NAME = Berth;
 				SDKROOT = macosx;
@@ -587,7 +595,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9XAXTT7H29;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -616,11 +624,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Berth/Berth.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Berth/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Berth;
@@ -632,7 +641,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.0001;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = app.berth.macos;
 				PRODUCT_NAME = Berth;
 				SDKROOT = macosx;
@@ -680,9 +690,22 @@
 				minimumVersion = 1.3.1;
 			};
 		};
+		C218B7CEC5CCB6B82905E50A /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9FE857369DACB2BFCB867EA8 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C218B7CEC5CCB6B82905E50A /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		D184A18E57A113831FEBA310 /* MenuBarExtraAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 186B134F9AB6747710DC5151 /* XCRemoteSwiftPackageReference "MenuBarExtraAccess" */;
