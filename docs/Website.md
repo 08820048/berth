@@ -57,3 +57,10 @@ env -u HTTPS_PROXY -u HTTP_PROXY -u https_proxy -u http_proxy npx shadcn@latest 
 
 - 已部署到 Cloudflare Pages（项目名 `berth-website`），生产域名 **https://berth.fyi**
 - 部署命令：`npx wrangler pages deploy out --project-name berth-website`
+
+## 国际化
+
+- `/` 为英文，`/zh/` 为简体中文，各自独立路由（SEO 友好，`<html lang>` 正确，
+  含 hreflang alternates）
+- 文案统一在 `lib/content.ts` 的 `dictionaries` 里维护，页面组件共享
+- 导航栏的 EN/中文 切换按钮在两个路由之间跳转
