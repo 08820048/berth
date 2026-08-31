@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+  <a href="README.en.md">English</a> · <a href="README.md">简体中文</a>
+</p>
+
+<p align="center">
   <a href="https://berth.fyi">官网 berth.fyi</a> ·
   <a href="#-下载">下载</a> ·
   <a href="#-功能">功能</a> ·
