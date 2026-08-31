@@ -73,19 +73,20 @@ ditto -c -k --keepParent "$APP" ".build/release/$ZIP"
 
 echo "==> Building DMG (for manual download/install)"
 DMG="Berth-$VERSION.dmg"
+mkdir -p .build/dmg
 STAGING=$(mktemp -d)
 cp -R "$APP" "$STAGING/"
 ln -s /Applications "$STAGING/Applications"
 hdiutil create -volname "$APP_NAME $VERSION" -srcfolder "$STAGING" -ov -format UDZO \
-  ".build/release/$DMG" >/dev/null
+  ".build/dmg/$DMG" >/dev/null
 rm -rf "$STAGING"
 
 echo "==> Notarizing DMG"
-xcrun notarytool submit ".build/release/$DMG" \
+xcrun notarytool submit ".build/dmg/$DMG" \
   --keychain-profile "$NOTARY_PROFILE" --wait
 echo "==> Stapling DMG"
-xcrun stapler staple ".build/release/$DMG"
-xcrun stapler validate ".build/release/$DMG"
+xcrun stapler staple ".build/dmg/$DMG"
+xcrun stapler validate ".build/dmg/$DMG"
 
 echo "==> Generating signed appcast"
 SPARKLE_BIN=".build/DerivedData/SourcePackages/artifacts/sparkle/Sparkle/bin"
@@ -101,7 +102,7 @@ cat <<EOF
 ==> Uploading to R2 ($R2_BUCKET)
 EOF
 wrangler r2 object put "$R2_BUCKET/$ZIP" --file ".build/release/$ZIP" --content-type application/zip --remote
-wrangler r2 object put "$R2_BUCKET/$DMG" --file ".build/release/$DMG" --content-type application/x-apple-diskimage --remote
+wrangler r2 object put "$R2_BUCKET/$DMG" --file ".build/dmg/$DMG" --content-type application/x-apple-diskimage --remote
 wrangler r2 object put "$R2_BUCKET/appcast.xml" --file ".build/release/appcast.xml" --content-type application/xml --remote
 
 cat <<EOF
@@ -110,6 +111,8 @@ Done. Published:
   - $PUBLIC_BASE_URL/$ZIP (Sparkle updates)
   - $PUBLIC_BASE_URL/$DMG (manual download/install)
   - $PUBLIC_BASE_URL/appcast.xml
+
+Note: .build/dmg/$DMG is the stapled DMG master copy.
 
 Optional:
   git add appcast.xml && git commit -m "chore: appcast for v$VERSION"

@@ -6,6 +6,14 @@
         <description>Berth release updates.</description>
         <language>en</language>
         <item>
+            <title>0.1.0</title>
+            <pubDate>Mon, 31 Aug 2026 14:40:25 +0800</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://pub-aa21c73b26d444688ef7db7de0c5f129.r2.dev/Berth-0.1.0.zip" length="4110097" type="application/octet-stream" sparkle:edSignature="+kQ+CRcyk0hbcZOOVEBEH9qtXFqhmO9ifXbc7ezCBZArEPPMY9icmdJbi5bUit+Fexi3gKk2Xrjap4siWWL1Aw=="/>
+        </item>
+        <item>
             <title>0.0001</title>
             <pubDate>Mon, 31 Aug 2026 13:28:27 +0800</pubDate>
             <sparkle:version>1</sparkle:version>
