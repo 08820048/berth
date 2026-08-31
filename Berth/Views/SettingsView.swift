@@ -62,19 +62,39 @@ struct SettingsView: View {
                 .foregroundStyle(.secondary)
 
             VStack(alignment: .leading, spacing: 14) {
+                HStack {
+                    Text(L10n.string("settings.language"))
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Picker(L10n.string("settings.language"), selection: $settings.language) {
+                        ForEach(AppLanguage.allCases) { language in
+                            Text(language.displayName)
+                                .font(.system(size: 12, weight: .regular))
+                                .foregroundStyle(Color.secondary)
+                                .tag(language)
+                        }
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.menu)
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundStyle(Color.secondary)
+                    .frame(width: 140)
+                    .help(L10n.string("settings.language.help"))
+                }
+
                 settingToggle(L10n.string("settings.launchAtLogin"), isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, enabled in
                         do {
                             try settings.setLaunchAtLogin(enabled)
                             loginError = nil
                         } catch {
-                            loginError = L10n.string("settings.loginError", error.localizedDescription)
+                            loginError = error.localizedDescription
                             launchAtLogin = settings.launchAtLogin
                         }
                     }
 
                 if let loginError {
-                    Text(loginError)
+                    Text(L10n.string("settings.loginError", loginError))
                         .font(.caption)
                         .foregroundStyle(.red)
                 }
@@ -199,14 +219,22 @@ private struct HotKeyRecorder: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            Button(recording ? L10n.string("settings.hotkey.recording") : spec.display) {
+            Button {
                 recording.toggle()
+            } label: {
+                Text(recording ? L10n.string("settings.hotkey.recording") : spec.display)
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundStyle(Color.secondary)
             }
             .background(HotKeyCatcher(spec: $spec, recording: $recording))
             if spec != .defaultShortcut {
-                Button(L10n.string("settings.hotkey.reset")) {
+                Button {
                     spec = .defaultShortcut
                     recording = false
+                } label: {
+                    Text(L10n.string("settings.hotkey.reset"))
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundStyle(Color.secondary)
                 }
                 .buttonStyle(.borderless)
             }

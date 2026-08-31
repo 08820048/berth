@@ -12,6 +12,11 @@ enum WatchedPorts {
 final class AppSettings {
     static let defaultWatchedPorts: Set<Int> = WatchedPorts.defaults
 
+    var language: AppLanguage {
+        get { L10n.shared.language }
+        set { L10n.shared.language = newValue }
+    }
+
     private enum Keys {
         static let refreshInterval = "refreshInterval"
         static let showMenuBarCount = "showMenuBarCount"

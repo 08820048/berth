@@ -176,7 +176,7 @@ struct MenuBarPanel: View {
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
         .background(Color.primary.opacity(0.025))
-        .accessibilityLabel("Watched ports")
+        .accessibilityLabel(L10n.string("settings.watched"))
     }
 
     @ViewBuilder
@@ -299,6 +299,7 @@ struct MenuBarPanel: View {
             }
             .buttonStyle(QuietIconButtonStyle())
             .help(L10n.string("settings.title"))
+            .accessibilityLabel(L10n.string("a11y.settings"))
             Button {
                 NSApp.terminate(nil)
             } label: {
@@ -306,6 +307,7 @@ struct MenuBarPanel: View {
             }
             .buttonStyle(QuietIconButtonStyle())
             .help(L10n.string("settings.quit"))
+            .accessibilityLabel(L10n.string("settings.quit"))
             Spacer(minLength: 8)
             footerStatus
         }
@@ -361,14 +363,14 @@ private struct BerthSlotView: View {
                 Circle()
                     .fill(entry == nil ? Color.secondary.opacity(0.35) : (entry?.isConflict == true ? Color.orange : Color.green))
                     .frame(width: 5, height: 5)
-                Text("\(port)")
+                Text(verbatim: String(port))
                     .font(.system(size: 11, weight: .semibold, design: .monospaced))
                     .foregroundStyle(Color.primary.opacity(0.82))
             }
             if isReleasing {
                 ProgressView().controlSize(.mini)
             } else if entry != nil {
-                Text(entry?.bindScope == .allInterfaces ? "LAN" : L10n.string("row.local"))
+                Text(L10n.string(entry?.bindScope == .allInterfaces ? "row.lanShort" : "row.local"))
                     .font(.system(size: 8, weight: .medium))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
@@ -386,7 +388,7 @@ private struct BerthSlotView: View {
                 .stroke(isSelected ? Color.accentColor : Color.primary.opacity(entry == nil ? 0.14 : 0.06), lineWidth: isSelected ? 1 : 0.5)
         }
         .contentShape(RoundedRectangle(cornerRadius: 7))
-        .accessibilityLabel(entry == nil ? "Port \(port), empty" : "Port \(port), occupied")
+        .accessibilityLabel(L10n.string(entry == nil ? "a11y.portEmpty" : "a11y.portOccupied", port))
     }
 }
 
@@ -483,6 +485,7 @@ private struct GroupHeaderView: View {
                 }
                 .buttonStyle(QuietIconButtonStyle())
                 .help(section.isPinned ? L10n.string("row.unpin") : L10n.string("row.pin"))
+                .accessibilityLabel(L10n.string(section.isPinned ? "row.unpin" : "row.pin"))
             }
             if hovered, section.canStopAll, let key = section.projectKey {
                 Button {
@@ -494,6 +497,7 @@ private struct GroupHeaderView: View {
                 .buttonStyle(QuietIconButtonStyle(color: .red))
                 .disabled(store.isStopping || store.isStopModalPresented)
                 .help(L10n.string("row.stopAll"))
+                .accessibilityLabel(L10n.string("a11y.stopAll", section.title))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

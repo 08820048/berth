@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>settings.refreshUnit</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@seconds@</string>
+        <key>seconds</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%d second</string>
+            <key>other</key>
+            <string>%d seconds</string>
+        </dict>
+    </dict>
+    <key>menu.count</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@ports@</string>
+        <key>ports</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>%d development port</string>
+            <key>other</key>
+            <string>%d development ports</string>
+        </dict>
+    </dict>
+    <key>stop.projectReleased</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@ports@ in %@</string>
+        <key>ports</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Released %d port</string>
+            <key>other</key>
+            <string>Released %d ports</string>
+        </dict>
+    </dict>
+</dict>
+</plist>
+

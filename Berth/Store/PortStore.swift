@@ -15,7 +15,8 @@ struct PanelSection: Identifiable, Equatable {
 @Observable
 final class PortStore {
     private(set) var entries: [PortEntry] = []
-    private(set) var scanError: String?
+    private var lastScanError: Error?
+    var scanError: String? { lastScanError.map(L10n.errorDescription) }
     private(set) var isScanning = false
     private(set) var isStopping = false
     private(set) var banner: BannerMessage?
@@ -153,9 +154,9 @@ final class PortStore {
         switch result {
         case .success(let next):
             entries = next
-            scanError = nil
+            lastScanError = nil
         case .failure(let error):
-            scanError = error.localizedDescription
+            lastScanError = error
         }
         isScanning = false
     }

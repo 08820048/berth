@@ -137,13 +137,17 @@ enum ScanError: Error, Equatable, LocalizedError {
     case emptyOutput
 
     var errorDescription: String? {
+        description(language: .saved())
+    }
+
+    func description(language: AppLanguage) -> String {
         switch self {
         case .lsofFailed(let message):
-            return message
+            return L10n.format("scan.commandFailed", language: language, arguments: [message])
         case .timedOut:
-            return "Scan timed out"
+            return L10n.format("scan.timedOut", language: language)
         case .emptyOutput:
-            return "lsof returned no data"
+            return L10n.format("scan.emptyOutput", language: language)
         }
     }
 }

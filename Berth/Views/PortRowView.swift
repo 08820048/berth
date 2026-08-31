@@ -33,7 +33,7 @@ struct PortRowView: View {
                         .help(metricsHelp)
                 }
 
-                Text("\(entry.port)")
+                Text(verbatim: String(entry.port))
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(.secondary)
                     .monospacedDigit()
@@ -42,7 +42,7 @@ struct PortRowView: View {
             }
 
             HStack(spacing: 6) {
-                Text("pid \(entry.primaryPID)")
+                Text(verbatim: "PID \(entry.primaryPID)")
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
                     .monospacedDigit()

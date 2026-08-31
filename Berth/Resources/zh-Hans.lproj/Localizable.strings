@@ -59,6 +59,9 @@
 "settings.title" = "设置";
 "settings.close" = "关闭设置";
 "settings.general" = "通用";
+"settings.language" = "语言";
+"settings.language.system" = "跟随系统";
+"settings.language.help" = "切换后立即生效，无需重启。";
 "settings.launchAtLogin" = "登录时启动";
 "settings.refresh" = "刷新间隔";
 "settings.refreshUnit" = "%d 秒";
@@ -93,3 +96,13 @@
 "a11y.settings" = "打开设置";
 "protection.systemProcess" = "系统进程，已禁用停止。";
 "protection.systemDaemon" = "系统守护进程，已禁用停止。";
+"row.lanShort" = "局域网";
+"a11y.portEmpty" = "端口 %d，空闲";
+"a11y.portOccupied" = "端口 %d，已占用";
+"scan.timedOut" = "端口扫描超时，请重试。";
+"scan.emptyOutput" = "端口扫描未返回数据。";
+"scan.commandFailed" = "无法扫描端口：%@";
+"duration.seconds" = "%d秒";
+"duration.minutes" = "%d分";
+"duration.hours" = "%d时";
+"duration.days" = "%d天";
