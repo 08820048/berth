@@ -82,7 +82,7 @@ struct StopConfirmPanel: View {
             .keyboardShortcut(.cancelAction)
 
             Button(action: onConfirm) {
-                Text(prompt.force ? L10n.string("force.confirm") : L10n.string("row.stop"))
+                Text(prompt.force ? L10n.string("force.confirm") : L10n.string("row.release"))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(ConfirmButtonStyle(kind: .destructive))

@@ -6,6 +6,10 @@ struct PortRowView: View {
     var settings: AppSettings
     @State private var hovered = false
 
+    private var isReleasing: Bool {
+        store.isStopping && store.stopPrompt?.entry.port == entry.port
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 6) {
@@ -15,7 +19,8 @@ struct PortRowView: View {
                     .help(entry.isConflict ? L10n.string("row.conflict") : L10n.string("row.listening"))
 
                 Text(rowTitle)
-                    .font(.system(.body, weight: .medium))
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundStyle(.primary.opacity(0.88))
                     .lineLimit(1)
 
                 Spacer(minLength: 8)
@@ -52,6 +57,7 @@ struct PortRowView: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
         .background(hovered ? Color.primary.opacity(0.05) : Color.clear)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .onHover { hovered = $0 }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(L10n.string("a11y.portRow", entry.port, entry.title))
@@ -118,15 +124,21 @@ struct PortRowView: View {
             .help(L10n.string("row.more"))
             .accessibilityLabel(L10n.string("a11y.more", entry.port))
 
-            if entry.allowsPrimaryStop || (entry.isDatabaseLike && !entry.isProtected) {
+            if entry.allowsPrimaryStop {
                 Button {
                     store.requestStop(entry)
                 } label: {
-                    Image(systemName: "stop.circle")
+                    if isReleasing {
+                        ProgressView().controlSize(.mini)
+                    } else {
+                        Text(L10n.string("row.release"))
+                            .font(.caption.weight(.medium))
+                    }
                 }
-                .buttonStyle(QuietIconButtonStyle(color: .red))
+                .buttonStyle(.borderless)
+                .foregroundStyle(Color.accentColor)
                 .disabled(store.isStopping || store.isStopModalPresented)
-                .help(L10n.string("row.stop"))
+                .help(L10n.string("row.release"))
                 .accessibilityLabel(L10n.string("a11y.stop", entry.port))
             }
         }
@@ -155,7 +167,7 @@ struct PortRowView: View {
         Divider()
 
         if !entry.isProtected {
-            Button(L10n.string("row.stop")) {
+            Button(L10n.string("row.release")) {
                 store.requestStop(entry)
             }
             Button(L10n.string("row.tree")) {

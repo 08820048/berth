@@ -5,17 +5,22 @@ struct MenuBarPanel: View {
     @Bindable var store: PortStore
     var settings: AppSettings
     var onOpenSettings: () -> Void
+    @State private var selectedPort: Int?
+    @State private var isPortsExpanded = false
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 header
                 searchBar
+                berthStrip
                 MenuHairline()
                 content
                 MenuHairline()
                 footer
             }
+            .padding(.horizontal, 4)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .disabled(store.isStopModalPresented)
             .opacity(store.isStopModalPresented ? 0.28 : 1)
 
@@ -37,12 +42,11 @@ struct MenuBarPanel: View {
         .frame(width: BerthLayout.panelWidth)
         .animation(.easeOut(duration: 0.15), value: store.stopPrompt?.id)
         .onAppear {
+            if selectedPort == nil {
+                selectedPort = watchedPorts.first(where: { port in store.entries.contains { $0.port == port } }) ?? watchedPorts.first
+            }
             Task { await store.refresh() }
         }
-    }
-
-    private var visibleRowCount: Int {
-        store.sections.reduce(0) { $0 + $1.entries.count }
     }
 
     private var isEmptyList: Bool {
@@ -51,7 +55,16 @@ struct MenuBarPanel: View {
     }
 
     private var listHeight: CGFloat {
-        BerthLayout.listHeight(rows: visibleRowCount, groups: store.sections.count, empty: isEmptyList)
+        if isEmptyList { return BerthLayout.emptyListHeight }
+        let estimated = store.sections.reduce(CGFloat.zero) { total, section in
+            if section.kind == .development {
+                return total + 52 + CGFloat(section.entries.count) * BerthLayout.rowHeight
+            }
+            return total + BerthLayout.groupHeaderHeight
+                + CGFloat(section.entries.count) * BerthLayout.rowHeight
+                + (section.hiddenCount > 0 ? 28 : 0)
+        }
+        return min(BerthLayout.maxListHeight, max(BerthLayout.minListHeight, estimated))
     }
 
     private var header: some View {
@@ -63,31 +76,10 @@ struct MenuBarPanel: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
-            filterMenu
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .frame(height: BerthLayout.headerHeight)
-    }
-
-    private var filterMenu: some View {
-        Menu {
-            Picker(L10n.string("filter.all"), selection: $store.filter) {
-                ForEach(QuickFilter.allCases) { item in
-                    Text(chipTitle(item)).tag(item)
-                }
-            }
-        } label: {
-            Image(systemName: store.filter == .all ? "line.3.horizontal.decrease" : "line.3.horizontal.decrease.circle.fill")
-                .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(.secondary)
-                .frame(width: 20, height: 20)
-                .contentShape(Rectangle())
-        }
-        .menuStyle(.borderlessButton)
-        .menuIndicator(.hidden)
-        .help(L10n.string("filter.all"))
-        .accessibilityLabel(chipTitle(store.filter))
     }
 
     private var searchBar: some View {
@@ -98,10 +90,110 @@ struct MenuBarPanel: View {
             TextField(L10n.string("search.placeholder"), text: $store.searchText)
                 .textFieldStyle(.plain)
                 .font(.system(size: 12))
+                .onSubmit(submitCommand)
         }
         .padding(.horizontal, 12)
         .padding(.bottom, 8)
         .frame(height: BerthLayout.searchHeight)
+    }
+
+    private var watchedPorts: [Int] {
+        settings.watchedPorts.sorted()
+    }
+
+    private var berthStrip: some View {
+        Group {
+            if isPortsExpanded {
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.flexible(minimum: 48, maximum: 64), spacing: 6), count: 6),
+                    spacing: 6
+                ) {
+                    ForEach(watchedPorts, id: \.self) { port in
+                        berthSlot(port)
+                    }
+                }
+                Button {
+                    withAnimation(.easeOut(duration: 0.15)) { isPortsExpanded = false }
+                } label: {
+                    Label(L10n.string("ports.showLess"), systemImage: "chevron.up")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 4)
+            } else {
+                HStack(spacing: 6) {
+                    ForEach(Array(watchedPorts.prefix(6)), id: \.self) { port in
+                        berthSlot(port)
+                            .frame(width: 48)
+                    }
+                    if watchedPorts.count > 6 {
+                        Button {
+                            withAnimation(.easeOut(duration: 0.15)) { isPortsExpanded = true }
+                        } label: {
+                            VStack(spacing: 2) {
+                                Image(systemName: "chevron.down")
+                                    .font(.caption2.weight(.semibold))
+                                Text("+\(watchedPorts.count - 6)")
+                                    .font(.system(size: 8, weight: .medium, design: .monospaced))
+                            }
+                            .foregroundStyle(.secondary)
+                            .frame(width: 30, height: 38)
+                        }
+                        .buttonStyle(.plain)
+                        .help(L10n.string("ports.showMore"))
+                        .accessibilityLabel(L10n.string("ports.showMore"))
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+        .background(Color.primary.opacity(0.025))
+        .accessibilityLabel("Watched ports")
+    }
+
+    @ViewBuilder
+    private func berthSlot(_ port: Int) -> some View {
+        let entry = store.entries.first(where: { $0.port == port })
+        BerthSlotView(port: port, entry: entry, isSelected: selectedPort == port, isReleasing: store.isStopping && store.stopPrompt?.entry.port == port)
+            .onTapGesture {
+                selectPort(port)
+            }
+    }
+
+    private func selectPort(_ port: Int) {
+        selectedPort = port
+        store.searchText = ""
+        if !watchedPorts.prefix(6).contains(port) {
+            isPortsExpanded = true
+        }
+    }
+
+    private func submitCommand() {
+        let raw = store.searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !raw.isEmpty else { return }
+        let tokens = raw.split(whereSeparator: { $0 == " " || $0 == "\t" }).map(String.init)
+        if let port = Int(tokens.first ?? ""), settings.watchedPorts.contains(port) {
+            selectPort(port)
+            return
+        }
+        guard tokens.count > 1, let port = Int(tokens[1]), let entry = store.entries.first(where: { $0.port == port }) else { return }
+        switch tokens[0].lowercased() {
+        case "release", "stop":
+            store.searchText = ""
+            store.requestStop(entry)
+        case "force":
+            store.searchText = ""
+            store.requestStop(entry, force: true)
+        case "open":
+            store.searchText = ""
+            if let url = entry.localhostURL { WorkspaceActions.openInBrowser(url) }
+        default: break
+        }
     }
 
     private var content: some View {
@@ -129,21 +221,34 @@ struct MenuBarPanel: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, minHeight: listHeight, maxHeight: listHeight)
             } else {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        ForEach(store.sections) { section in
-                            sectionView(section)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 0) {
+                            ForEach(store.sections) { section in
+                                sectionView(section)
+                                    .id(section.id)
+                            }
+                        }
+                    }
+                    .scrollIndicators(.automatic)
+                    .frame(height: listHeight)
+                    .onChange(of: selectedPort) { _, port in
+                        guard let port,
+                              let entry = store.entries.first(where: { $0.port == port }) else { return }
+                        withAnimation(.easeOut(duration: 0.18)) {
+                            proxy.scrollTo(entry.group == .development ? "dev-\(entry.projectKey)" : entry.group.rawValue, anchor: .top)
                         }
                     }
                 }
-                .scrollIndicators(.automatic)
-                .frame(height: listHeight)
             }
         }
     }
 
     private func sectionView(_ section: PanelSection) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        if section.kind == .development {
+            return AnyView(ProjectCardView(section: section, store: store, settings: settings, selectedPort: $selectedPort))
+        }
+        return AnyView(VStack(alignment: .leading, spacing: 0) {
             GroupHeaderView(section: section, store: store, settings: settings)
             if section.hiddenCount > 0 {
                 Button(L10n.string("settings.showSystem")) {
@@ -158,25 +263,34 @@ struct MenuBarPanel: View {
             ForEach(section.entries) { entry in
                 PortRowView(entry: entry, store: store, settings: settings)
             }
-        }
+        })
     }
 
     private var footer: some View {
-        VStack(spacing: 0) {
-            footerMessage
-            footerButton(icon: "gearshape", title: L10n.string("settings.title"), shortcut: "⌘,") {
+        HStack(spacing: 8) {
+            footerStatus
+            Spacer(minLength: 8)
+            Button {
                 onOpenSettings()
+            } label: {
+                Image(systemName: "gearshape")
             }
-            .keyboardShortcut(",", modifiers: .command)
-            footerButton(icon: "power", title: L10n.string("settings.quit"), shortcut: "⌘Q") {
+            .buttonStyle(QuietIconButtonStyle())
+            .help(L10n.string("settings.title"))
+            Button {
                 NSApp.terminate(nil)
+            } label: {
+                Image(systemName: "power")
             }
-            .keyboardShortcut("q", modifiers: .command)
+            .buttonStyle(QuietIconButtonStyle())
+            .help(L10n.string("settings.quit"))
         }
+        .padding(.horizontal, 12)
+        .frame(height: BerthLayout.footerRowHeight)
     }
 
     @ViewBuilder
-    private var footerMessage: some View {
+    private var footerStatus: some View {
         if store.isStopping {
             HStack(spacing: 8) {
                 ProgressView()
@@ -184,11 +298,7 @@ struct MenuBarPanel: View {
                 Text(L10n.string("menu.busy"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Spacer()
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            Divider()
         } else if let banner = store.banner {
             HStack(spacing: 8) {
                 Text(banner.text)
@@ -205,38 +315,108 @@ struct MenuBarPanel: View {
                     .font(.caption.weight(.medium))
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            Divider()
         }
     }
 
-    private func footerButton(icon: String, title: String, shortcut: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: icon)
+}
+
+private struct BerthSlotView: View {
+    let port: Int
+    let entry: PortEntry?
+    let isSelected: Bool
+    let isReleasing: Bool
+
+    var body: some View {
+        VStack(spacing: 2) {
+            HStack(spacing: 3) {
+                Circle()
+                    .fill(entry == nil ? Color.secondary.opacity(0.35) : (entry?.isConflict == true ? Color.orange : Color.green))
+                    .frame(width: 5, height: 5)
+                Text("\(port)")
+                    .font(.system(size: 11, weight: .semibold, design: .monospaced))
+            }
+            if isReleasing {
+                ProgressView().controlSize(.mini)
+            } else if entry != nil {
+                Text(entry?.bindScope == .allInterfaces ? "LAN" : L10n.string("row.local"))
+                    .font(.system(size: 8, weight: .medium))
                     .foregroundStyle(.secondary)
-                    .frame(width: 14)
-                Text(title)
-                Spacer()
-                Text(shortcut)
-                    .font(.caption)
+                    .lineLimit(1)
+            } else {
+                Text("—")
+                    .font(.caption2)
                     .foregroundStyle(.tertiary)
             }
         }
-        .buttonStyle(.plain)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 9)
-        .frame(height: BerthLayout.footerRowHeight)
+        .frame(width: 48, height: 38)
+        .padding(.horizontal, 3)
+        .background(isSelected ? Color.accentColor.opacity(0.17) : (entry == nil ? Color.clear : Color.primary.opacity(0.07)), in: RoundedRectangle(cornerRadius: 7))
+        .overlay {
+            RoundedRectangle(cornerRadius: 7)
+                .stroke(isSelected ? Color.accentColor : Color.primary.opacity(entry == nil ? 0.14 : 0.06), lineWidth: isSelected ? 1 : 0.5)
+        }
+        .contentShape(RoundedRectangle(cornerRadius: 7))
+        .accessibilityLabel(entry == nil ? "Port \(port), empty" : "Port \(port), occupied")
+    }
+}
+
+private struct ProjectCardView: View {
+    let section: PanelSection
+    var store: PortStore
+    var settings: AppSettings
+    @Binding var selectedPort: Int?
+
+    private var isSelected: Bool {
+        section.entries.contains { $0.port == selectedPort }
     }
 
-    private func chipTitle(_ filter: QuickFilter) -> String {
-        switch filter {
-        case .all: return L10n.string("filter.all")
-        case .development: return L10n.string("filter.development")
-        case .database: return L10n.string("filter.database")
-        case .exposed: return L10n.string("filter.exposed")
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button {
+                selectedPort = section.entries.first?.port
+            } label: {
+                HStack(spacing: 7) {
+                    Circle()
+                        .fill(section.entries.contains(where: \.isConflict) ? Color.orange : Color.green)
+                        .frame(width: 7, height: 7)
+                    if let icon = section.entries.first?.frameworkDisplayName {
+                        FrameworkIcon(name: icon, size: 14)
+                    }
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(section.title)
+                            .font(.system(.subheadline, weight: .semibold))
+                            .lineLimit(1)
+                        Text(summary)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    }
+                    Spacer(minLength: 4)
+                    if section.isPinned {
+                        Image(systemName: "pin.fill")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+
+            ForEach(section.entries) { entry in
+                PortRowView(entry: entry, store: store, settings: settings)
+            }
         }
+        .background(isSelected ? Color.accentColor.opacity(0.045) : Color.clear)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var summary: String {
+        let ports = section.entries.map { String($0.port) }.joined(separator: ", ")
+        let scope = section.entries.contains(where: { $0.bindScope == .allInterfaces }) ? L10n.string("row.lan") : L10n.string("row.local")
+        return "\(ports) · \(scope)"
     }
 }
 
@@ -284,6 +464,7 @@ private struct GroupHeaderView: View {
                 .help(L10n.string("row.stopAll"))
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 12)
         .padding(.top, 8)
         .padding(.bottom, 2)

@@ -4,16 +4,14 @@ enum BerthLayout {
     static let panelWidth: CGFloat = 380
     static let rowHeight: CGFloat = 47
     static let groupHeaderHeight: CGFloat = 27
-    static let maxListHeight: CGFloat = 420
+    // Keep the native menu-bar card compact while project cards stay collapsed by default.
+    static let maxListHeight: CGFloat = 380
+    static let minListHeight: CGFloat = 300
     static let emptyListHeight: CGFloat = 88
     static let headerHeight: CGFloat = 36
     static let searchHeight: CGFloat = 34
     static let footerRowHeight: CGFloat = 36
 
-    static func listHeight(rows: Int, groups: Int, empty: Bool) -> CGFloat {
-        if empty { return emptyListHeight }
-        return min(maxListHeight, CGFloat(rows) * rowHeight + CGFloat(groups) * groupHeaderHeight)
-    }
 }
 
 struct QuietIconButtonStyle: ButtonStyle {

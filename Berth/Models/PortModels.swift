@@ -183,12 +183,3 @@ struct BannerMessage: Equatable, Identifiable, Sendable {
     let text: String
     let port: Int?
 }
-
-enum QuickFilter: String, CaseIterable, Identifiable, Sendable {
-    case all
-    case development
-    case database
-    case exposed
-
-    var id: String { rawValue }
-}

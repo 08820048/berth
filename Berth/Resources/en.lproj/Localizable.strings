@@ -1,11 +1,9 @@
 "app.name" = "Berth";
-"search.placeholder" = "Search";
+"search.placeholder" = "Find port, project, or command";
+"ports.showMore" = "Show more watched ports";
+"ports.showLess" = "Show fewer watched ports";
 "header.count" = "%d listening";
 "row.listening" = "Listening";
-"filter.all" = "All";
-"filter.development" = "Dev";
-"filter.database" = "Database";
-"filter.exposed" = "Exposed";
 "group.database" = "Databases";
 "group.container" = "Containers";
 "group.other" = "Other";
@@ -16,8 +14,10 @@
 "scan.failed" = "Scan failed";
 "row.open" = "Open";
 "row.stop" = "Stop";
+"row.release" = "Release";
 "row.more" = "More";
 "row.lan" = "LAN";
+"row.local" = "local";
 "row.force" = "Force quit";
 "row.tree" = "Stop process tree";
 "row.copyPID" = "Copy PID";

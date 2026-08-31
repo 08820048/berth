@@ -22,7 +22,6 @@ final class PortStore {
     var stopPrompt: StopPrompt?
     var stopPhase: StopPhase = .confirm
     var searchText = ""
-    var filter: QuickFilter = .all
 
     let settings: AppSettings
     private var pollTask: Task<Void, Never>?
@@ -38,6 +37,10 @@ final class PortStore {
         visibleEntries.filter { $0.group == .development }.count
     }
 
+    var occupiedWatchedCount: Int {
+        visibleEntries.filter { $0.isWatched && $0.group == .development }.count
+    }
+
     var hasConflict: Bool {
         visibleEntries.contains(where: \.isConflict)
     }
@@ -47,7 +50,7 @@ final class PortStore {
     }
 
     var sections: [PanelSection] {
-        let filtered = applyFilter(visibleEntries)
+        let filtered = applySearch(visibleEntries)
         var result: [PanelSection] = []
 
         let development = filtered.filter { $0.group == .development }
@@ -103,7 +106,7 @@ final class PortStore {
                     )
                 )
             }
-        } else if hiddenSystem > 0, filter == .all, searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+        } else if hiddenSystem > 0, searchText.trimmingCharacters(in: .whitespaces).isEmpty {
             result.append(
                 PanelSection(
                     id: "system-hidden",
@@ -278,19 +281,9 @@ final class PortStore {
         }
     }
 
-    private func applyFilter(_ source: [PortEntry]) -> [PortEntry] {
+    private func applySearch(_ source: [PortEntry]) -> [PortEntry] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         return source.filter { entry in
-            switch filter {
-            case .all:
-                break
-            case .development:
-                if entry.group != .development { return false }
-            case .database:
-                if entry.group != .database { return false }
-            case .exposed:
-                if entry.bindScope != .allInterfaces { return false }
-            }
             if query.isEmpty { return true }
             let haystack = [
                 String(entry.port),
