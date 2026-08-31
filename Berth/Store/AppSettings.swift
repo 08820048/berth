@@ -87,21 +87,6 @@ final class AppSettings {
         }
     }
 
-    var watchedPortsText: String {
-        get { watchedPorts.sorted().map(String.init).joined(separator: ", ") }
-        set {
-            let parsed = Set(
-                newValue
-                    .split(whereSeparator: { ",; ".contains($0) })
-                    .compactMap { Int($0) }
-                    .filter { (1...65535).contains($0) }
-            )
-            if !parsed.isEmpty {
-                watchedPorts = parsed
-            }
-        }
-    }
-
     var launchAtLogin: Bool {
         SMAppService.mainApp.status == .enabled
     }

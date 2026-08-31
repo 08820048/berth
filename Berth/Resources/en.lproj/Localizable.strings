@@ -79,7 +79,9 @@
 "update.restart" = "Restart to Update";
 "settings.version" = "Version %@";
 "settings.watched" = "Watched ports";
-"settings.watchedHelp" = "Comma-separated list. Default covers common local dev ports.";
+"settings.watchedHelp" = "Type a port number and press return to add; click × to remove.";
+"settings.watched.add" = "Add";
+"settings.watched.remove" = "Remove port %d";
 "settings.loginError" = "Could not update login item: %@";
 "settings.quit" = "Quit Berth";
 "settings.hotkey" = "Open panel shortcut";

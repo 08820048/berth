@@ -79,7 +79,9 @@
 "update.restart" = "重启完成更新";
 "settings.version" = "版本 %@";
 "settings.watched" = "关注端口";
-"settings.watchedHelp" = "用逗号分隔。默认覆盖常见本地开发端口。";
+"settings.watchedHelp" = "输入端口号后按回车添加，点 × 移除。";
+"settings.watched.add" = "添加";
+"settings.watched.remove" = "移除端口 %d";
 "settings.loginError" = "无法更新登录项：%@";
 "settings.quit" = "退出 Berth";
 "settings.hotkey" = "打开面板快捷键";

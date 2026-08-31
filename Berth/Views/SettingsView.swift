@@ -5,12 +5,12 @@ struct SettingsView: View {
     @Bindable var settings: AppSettings
     @ObservedObject var updates: UpdateService
     var onClose: () -> Void
-    @State private var watchedText: String = ""
     @State private var loginError: String?
     @State private var launchAtLogin: Bool = false
     @State private var recordingHotKey = false
     @State private var automaticallyChecksForUpdates = true
     @Namespace private var refreshModeNS
+    @State private var watchedPortDraft = ""
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -50,7 +50,6 @@ struct SettingsView: View {
         .background(Color.primary.opacity(0.025))
         .toggleStyle(.switch)
         .onAppear {
-            watchedText = settings.watchedPortsText
             launchAtLogin = settings.launchAtLogin
             automaticallyChecksForUpdates = updates.automaticallyChecksForUpdates
         }
@@ -182,16 +181,102 @@ struct SettingsView: View {
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
 
-            TextField(L10n.string("settings.watched"), text: $watchedText, axis: .vertical)
-                .textFieldStyle(.roundedBorder)
-                .lineLimit(2...4)
-                .onChange(of: watchedText) { _, newValue in
-                    settings.watchedPortsText = newValue
+            FlowLayout(spacing: 5) {
+                ForEach(settings.watchedPorts.sorted(), id: \.self) { port in
+                    watchedPortToken(port)
                 }
+                addWatchedPortField
+            }
+            .padding(7)
+            .frame(maxWidth: .infinity, minHeight: 56, alignment: .topLeading)
+            .background(Color.primary.opacity(0.04), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .animation(.spring(response: 0.35, dampingFraction: 0.75), value: settings.watchedPorts)
 
             Text(L10n.string("settings.watchedHelp"))
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
+        }
+    }
+
+    private func watchedPortToken(_ port: Int) -> some View {
+        HStack(spacing: 4) {
+            Text("\(port)")
+                .font(.system(size: 12))
+                .foregroundStyle(Color.primary.opacity(0.82))
+            Button {
+                settings.watchedPorts.remove(port)
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 7, weight: .bold))
+                    .foregroundStyle(.tertiary)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(L10n.string("settings.watched.remove", port))
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(Color.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 7))
+    }
+
+    private var addWatchedPortField: some View {
+        ZStack(alignment: .leading) {
+            if watchedPortDraft.isEmpty {
+                Text(L10n.string("settings.watched.add"))
+                    .font(.system(size: 12))
+                    .foregroundStyle(.tertiary)
+            }
+            TextField("", text: $watchedPortDraft)
+                .textFieldStyle(.plain)
+                .font(.system(size: 12))
+                .foregroundStyle(Color.primary.opacity(0.82))
+        }
+        .frame(width: 56)
+        .onSubmit(addWatchedPort)
+        .onChange(of: watchedPortDraft) { _, value in
+            watchedPortDraft = String(value.filter(\.isNumber).prefix(5))
+        }
+    }
+
+    private func addWatchedPort() {
+        guard let port = Int(watchedPortDraft),
+              (1...65535).contains(port),
+              !settings.watchedPorts.contains(port) else { return }
+        settings.watchedPorts.insert(port)
+        watchedPortDraft = ""
+    }
+
+    struct FlowLayout: Layout {
+        var spacing: CGFloat = 5
+
+        func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+            let maxWidth = proposal.width ?? 300
+            var x: CGFloat = 0, y: CGFloat = 0, rowHeight: CGFloat = 0
+            for subview in subviews {
+                let size = subview.sizeThatFits(.unspecified)
+                if x + size.width > maxWidth, x > 0 {
+                    x = 0
+                    y += rowHeight + spacing
+                    rowHeight = 0
+                }
+                x += size.width + spacing
+                rowHeight = max(rowHeight, size.height)
+            }
+            return CGSize(width: maxWidth, height: y + rowHeight)
+        }
+
+        func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+            var x: CGFloat = 0, y: CGFloat = 0, rowHeight: CGFloat = 0
+            for subview in subviews {
+                let size = subview.sizeThatFits(.unspecified)
+                if x + size.width > bounds.width, x > 0 {
+                    x = 0
+                    y += rowHeight + spacing
+                    rowHeight = 0
+                }
+                subview.place(at: CGPoint(x: bounds.minX + x, y: bounds.minY + y), proposal: .unspecified)
+                x += size.width + spacing
+                rowHeight = max(rowHeight, size.height)
+            }
         }
     }
 
@@ -256,7 +341,7 @@ struct SettingsView: View {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .stroke(isSelected ? Color.accentColor : Color.clear, lineWidth: 1)
                 }
-                .foregroundStyle(isSelected ? Color.primary : Color.secondary)
+                .foregroundStyle(Color.secondary)
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
