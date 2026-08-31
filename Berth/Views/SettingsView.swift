@@ -78,8 +78,12 @@ struct SettingsView: View {
                     Text(L10n.string("settings.version", appVersion))
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Button(L10n.string("settings.checkForUpdates")) {
+                    Button {
                         updates.checkForUpdates()
+                    } label: {
+                        Text(L10n.string("settings.checkForUpdates"))
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
                     }
                     .buttonStyle(.bordered)
                     .controlSize(.small)
