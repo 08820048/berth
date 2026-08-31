@@ -32,6 +32,7 @@
 		81D86651FE0FDEE901A1289C /* PortModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA3A90BE502D08951437247 /* PortModels.swift */; };
 		A1F70086C7E228C36789748A /* BerthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918848609FCD11A3F8BB15BF /* BerthApp.swift */; };
 		A88779ECD086BF7ED8C5F31F /* MenuBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A274FB4959156F86990A727 /* MenuBarPanel.swift */; };
+		AD805D0C46AE72E235F319A2 /* BerthMenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CD6F4F1FD9B2FDF25845B9 /* BerthMenuBarIcon.swift */; };
 		AF6E7F493708BB295FF86D60 /* PortRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFB5E1DAC4241A1015BDA29 /* PortRowView.swift */; };
 		B50149380CFC26D0A7FDC4BF /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AC4659D9CA923EF72FE28 /* AppSettings.swift */; };
 		B512F2548E7D630BF104E162 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9988362C42F3852D74E123D7 /* Localizable.strings */; };
@@ -41,6 +42,7 @@
 		DE1E025358559E052314B0E6 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5D31824EFFEA12E71068B /* CommandRunner.swift */; };
 		E014F1FA61A7937D9839B3A8 /* LsofParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F23DE35032E1BC73207DD7C /* LsofParser.swift */; };
 		E9D6DB7DD82179F289E8A286 /* StopConfirmPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F25B53B8AFB5D04E747316D3 /* StopConfirmPanel.swift */; };
+		ECCB79D1AD125DC13AE0D9BA /* MenuBarIconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D3A1F4B6CC7425E1050C73 /* MenuBarIconTests.swift */; };
 		EEF2087AE00602662F579D69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6993F0CF4A341C97B8B01092 /* AppDelegate.swift */; };
 		EF68B1C5CC48C3418144AC5C /* ProjectNameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C954CC1DBD73F4EB3C4EF31 /* ProjectNameResolver.swift */; };
 		F8B6987C8A078813FECA2067 /* ProtectedProcessPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A213237017B3E501B7CC6424 /* ProtectedProcessPolicy.swift */; };
@@ -67,6 +69,7 @@
 		2F23DE35032E1BC73207DD7C /* LsofParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LsofParser.swift; sourceTree = "<group>"; };
 		309A61A6E9B6D936DB66A613 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3D6C3103FF7EA3397E99DB24 /* IgnoreRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreRule.swift; sourceTree = "<group>"; };
+		43D3A1F4B6CC7425E1050C73 /* MenuBarIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconTests.swift; sourceTree = "<group>"; };
 		563B64E2A528C61E4F6BC666 /* ProcessInfoReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfoReader.swift; sourceTree = "<group>"; };
 		56A1312C52F0769822205BDE /* LsofParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LsofParserTests.swift; sourceTree = "<group>"; };
 		57A1877995779C85F404441E /* BerthLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BerthLayout.swift; sourceTree = "<group>"; };
@@ -80,6 +83,7 @@
 		874CA249600E594EC4DC8F0B /* FrameworkIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkIcon.swift; sourceTree = "<group>"; };
 		918848609FCD11A3F8BB15BF /* BerthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BerthApp.swift; sourceTree = "<group>"; };
 		935CE4B10B5B3C7097EF1BD9 /* PortScanEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortScanEngineTests.swift; sourceTree = "<group>"; };
+		95CD6F4F1FD9B2FDF25845B9 /* BerthMenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BerthMenuBarIcon.swift; sourceTree = "<group>"; };
 		97FDDB68A18E409C232A4DC8 /* LocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
 		99C5F9CB21CCC06320A01B3D /* FrameworkDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkDetector.swift; sourceTree = "<group>"; };
 		9A358F06BB96FBEF46F1BBAF /* FrameworkDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkDetectorTests.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 				FE2AD08629D2DB150D3127F9 /* KillPolicyTests.swift */,
 				97FDDB68A18E409C232A4DC8 /* LocalizationTests.swift */,
 				56A1312C52F0769822205BDE /* LsofParserTests.swift */,
+				43D3A1F4B6CC7425E1050C73 /* MenuBarIconTests.swift */,
 				A4358E2C41C0DAF8AF58AFF9 /* PanelWindowAnchorTests.swift */,
 				935CE4B10B5B3C7097EF1BD9 /* PortScanEngineTests.swift */,
 				2005052EE5405DD32FBB0D42 /* ProjectNameResolverTests.swift */,
@@ -223,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				57A1877995779C85F404441E /* BerthLayout.swift */,
+				95CD6F4F1FD9B2FDF25845B9 /* BerthMenuBarIcon.swift */,
 				874CA249600E594EC4DC8F0B /* FrameworkIcon.swift */,
 				D205DE135F5AC46A0574B6A8 /* MenuBarLabel.swift */,
 				6A274FB4959156F86990A727 /* MenuBarPanel.swift */,
@@ -339,6 +345,7 @@
 				B50149380CFC26D0A7FDC4BF /* AppSettings.swift in Sources */,
 				A1F70086C7E228C36789748A /* BerthApp.swift in Sources */,
 				569503809EF3D10849B9AAC5 /* BerthLayout.swift in Sources */,
+				AD805D0C46AE72E235F319A2 /* BerthMenuBarIcon.swift in Sources */,
 				DE1E025358559E052314B0E6 /* CommandRunner.swift in Sources */,
 				43DE0735C4E6207DD782DFD6 /* DockerInspector.swift in Sources */,
 				2E3CD2DAE2CCAF6CBFEFDD1A /* FrameworkDetector.swift in Sources */,
@@ -372,6 +379,7 @@
 				FFC13BF51A616FBF4FF30EF1 /* KillPolicyTests.swift in Sources */,
 				7D18E2D104560239922B8AEA /* LocalizationTests.swift in Sources */,
 				799DDACF6984628392920B02 /* LsofParserTests.swift in Sources */,
+				ECCB79D1AD125DC13AE0D9BA /* MenuBarIconTests.swift in Sources */,
 				6FA1BC91A6787E8B0F808141 /* PanelWindowAnchorTests.swift in Sources */,
 				2A17A96D615F05A239B906ED /* PortScanEngineTests.swift in Sources */,
 				7B5F5EF30F62679DC126DEB8 /* ProjectNameResolverTests.swift in Sources */,

@@ -6,8 +6,7 @@ struct MenuBarLabel: View {
 
     var body: some View {
         HStack(spacing: 3) {
-            Image(systemName: store.isStopping ? "arrow.triangle.2.circlepath" : (store.hasConflict ? "exclamationmark.triangle" : "network"))
-                .symbolRenderingMode(.monochrome)
+            BerthMenuBarIcon(state: iconState)
             if settings.showMenuBarCount, store.occupiedWatchedCount > 0, !store.isStopping {
                 Text("\(store.occupiedWatchedCount)")
                     .font(.system(size: 12, weight: .semibold).monospacedDigit())
@@ -18,5 +17,11 @@ struct MenuBarLabel: View {
                 ? L10n.string("menu.busy")
                 : L10n.string("menu.count", store.occupiedWatchedCount)
         )
+    }
+
+    private var iconState: BerthMenuBarIconState {
+        if store.isStopping { return .working }
+        if store.hasConflict { return .conflict }
+        return .normal
     }
 }
