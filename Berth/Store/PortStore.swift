@@ -50,7 +50,24 @@ final class PortStore {
         entries.filter { !IgnoreMatcher.isIgnored($0, rules: settings.ignoreRules) }
     }
 
+    private var _cachedSections: [PanelSection] = []
+    private var _sectionsCacheKey: Int = 0
+
     var sections: [PanelSection] {
+        let entriesChecksum = entries.reduce(0) { $0 ^ $1.port }
+        let key = entriesChecksum
+            ^ searchText.hashValue
+            ^ settings.showSystemPorts.hashValue
+            ^ settings.pinnedProjects.hashValue
+            ^ settings.ignoreRules.hashValue
+        if key != _sectionsCacheKey {
+            _cachedSections = _computeSections()
+            _sectionsCacheKey = key
+        }
+        return _cachedSections
+    }
+
+    private func _computeSections() -> [PanelSection] {
         let filtered = applySearch(visibleEntries)
         var result: [PanelSection] = []
 

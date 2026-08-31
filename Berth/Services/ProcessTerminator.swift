@@ -74,6 +74,19 @@ struct ProcessTerminator: Sendable {
             }
         }
 
+        // 二次校验：防止窗口期内端口被其他进程抢占（尤其是系统进程替换）
+        do {
+            let recheck = try scan()
+            guard let rechecked = recheck.first(where: { $0.port == port }) else {
+                return .alreadyGone
+            }
+            guard Set(rechecked.pids) == Set(entry.pids) else {
+                return .alreadyGone
+            }
+        } catch {
+            return .failed(error.localizedDescription)
+        }
+
         var targets = Set(entry.pids)
         if includeTree {
             for pid in entry.pids {
@@ -97,7 +110,7 @@ struct ProcessTerminator: Sendable {
             }
         }
 
-        waitForRelease(port: port, timeout: force ? 0.4 : 2.0)
+        waitForRelease(port: port, timeout: force ? 0.4 : 2.0, pids: ordered)
 
         do {
             let after = try scan()
@@ -146,12 +159,18 @@ struct ProcessTerminator: Sendable {
         return ordered
     }
 
-    private func waitForRelease(port: Int, timeout: TimeInterval) {
+    private func waitForRelease(port: Int, timeout: TimeInterval, pids: [Int32] = []) {
         let start = Date()
         sleepNanos(300_000_000)
         while Date().timeIntervalSince(start) < timeout {
-            if let current = try? scan(), !current.contains(where: { $0.port == port }) {
-                return
+            if pids.isEmpty {
+                if let current = try? scan(), !current.contains(where: { $0.port == port }) {
+                    return
+                }
+            } else {
+                if !pids.contains(where: signaler.isAlive) {
+                    return
+                }
             }
             sleepNanos(200_000_000)
         }

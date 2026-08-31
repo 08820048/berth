@@ -68,6 +68,13 @@ enum ProtectedProcessPolicy {
         if processName.hasPrefix("com.apple.") {
             return .systemProcess
         }
+        // 兜底：root 用户且可执行文件位于真正的系统目录
+        if uid == 0, let path = executablePath {
+            let strictSystemRoots = ["/System/", "/sbin/", "/bin/"]
+            if strictSystemRoots.contains(where: { path.hasPrefix($0) }) {
+                return .systemDaemon
+            }
+        }
         return nil
     }
 }

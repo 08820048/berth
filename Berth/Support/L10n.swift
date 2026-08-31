@@ -97,10 +97,19 @@ final class CPUTimeCache: @unchecked Sendable {
     static let shared = CPUTimeCache()
     private let lock = NSLock()
     private var samples: [Int32: (Date, UInt64)] = [:]
+    private let maxSamples = 512
 
     func percent(pid: Int32, totalNanos: UInt64, now: Date = .now) -> Double? {
         lock.lock()
         defer { lock.unlock() }
+
+        // 清理：若超限且当前 PID 不在缓存中，移除最老的样本
+        if samples.count >= maxSamples, samples[pid] == nil {
+            if let oldest = samples.min(by: { $0.value.0 < $1.value.0 }) {
+                samples.removeValue(forKey: oldest.key)
+            }
+        }
+
         if let previous = samples[pid] {
             let elapsed = now.timeIntervalSince(previous.0)
             samples[pid] = (now, totalNanos)

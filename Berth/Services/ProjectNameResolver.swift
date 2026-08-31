@@ -89,13 +89,17 @@ enum ProjectNameResolver {
     static func walkUp(from directory: String, matches: (String) -> Bool) -> String? {
         var current = URL(fileURLWithPath: directory)
         let fm = FileManager.default
-        while true {
+        var depth = 0
+        let maxDepth = 128
+        while depth < maxDepth {
             if matches(current.path) { return current.path }
             let parent = current.deletingLastPathComponent()
             if parent.path == current.path { return nil }
             if !fm.fileExists(atPath: parent.path) { return nil }
             current = parent
+            depth += 1
         }
+        return nil
     }
 
     static func isUserProjectPath(_ path: String) -> Bool {
