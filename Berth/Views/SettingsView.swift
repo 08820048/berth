@@ -35,9 +35,11 @@ struct SettingsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     generalSettings
-                    updateSettings
                     watchedPortsSettings
                     ignoredSettings
+                    // 设计原则：「软件更新」始终放在设置面板最底部。
+                    // 新增功能模块时插入在本注释之前，不要排在它后面。
+                    updateSettings
                 }
                 .padding(.horizontal, 14)
                 .padding(.bottom, 16)
